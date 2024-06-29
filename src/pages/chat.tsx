@@ -1,12 +1,17 @@
 import { NextPage } from "next";
 import { ChatPageComponent } from "@/components/chat";
 import { AppLayout } from "@/layout";
+import { useAuthContext } from "@/context/AuthContext";
+import { PubNubContextProvider } from "@/context/PubNubContext";
 
 const ChatPage: NextPage = () => {
+    const { user } = useAuthContext();
     return (
-        <AppLayout>
-            <ChatPageComponent />
-        </AppLayout>
+        <PubNubContextProvider user={user}>
+            <AppLayout>
+                <ChatPageComponent />
+            </AppLayout>
+        </PubNubContextProvider>
     );
 };
 
