@@ -1,3 +1,5 @@
+import { usePubNubContext } from "@/context/PubNubContext";
+import { ChannelList, ChatActionBar, ChatInput, ChatWindow, EmptyChat } from "./atoms";
 import {
     ChatComponentContainer,
     ChatComponentInnerContainer,
@@ -8,19 +10,19 @@ import {
 
 
 export const ChatPageComponent = () => {
+    const { activeChannel } = usePubNubContext();
+
     return (
         <ChatComponentContainer>
             <ChatComponentInnerContainer>
                 <h1>Chat</h1>
                 <ChatRoomStack>
-                    <div>
-                        <p>Chat list</p>
-                    </div>
+                    <ChannelList />
                     <CurrentChatWindow>
                         <ChatRoomWrapper>
-                            <div>
-                                <h1>Chat room</h1>
-                            </div>
+                            <ChatActionBar />
+                            {activeChannel ? <ChatWindow /> : <EmptyChat />}
+                            {activeChannel && <ChatInput />}
                         </ChatRoomWrapper>
                     </CurrentChatWindow>
                 </ChatRoomStack>

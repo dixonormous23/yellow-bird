@@ -16,8 +16,7 @@ export const ChatComponentInnerContainer = styled.div`
 `;
 
 export const ChatRoomStack = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 3fr;
+    display: flex;
     flex: 1 1 0px;
     position: relative;
     border-radius: 10px;
