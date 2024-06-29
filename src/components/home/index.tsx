@@ -21,7 +21,7 @@ interface FormState {
     password: string;
 };
 
-export const HomeComponent = () => {
+export const HomePageComponent = () => {
     const [state, setState] = useState<FormState>({
         email: '',
         password: ''

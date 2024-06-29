@@ -1,4 +1,5 @@
 export { InputField } from './InputField';
+export { Icon } from './Icon';
 export {
     FormPageContainer,
     FormContainer,
