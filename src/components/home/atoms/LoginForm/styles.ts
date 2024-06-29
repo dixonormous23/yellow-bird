@@ -1,21 +1,6 @@
 import Link from "next/link";
 import styled, { keyframes, css } from "styled-components";
 
-export const HomePageContainer = styled.section`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 96px;
-    padding-bottom: 96px;
-    min-height: 80vh;
-    background-position: center center;
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)) center center / cover no-repeat, url(https://zone-ui.vercel.app/assets/background/overlay_1.jpg);
-`;
-
 const borderAnimation = keyframes`
     from {
         width: calc(0%);
@@ -26,45 +11,8 @@ const borderAnimation = keyframes`
     }
 `;
 
-const fadeInAnimation = keyframes`
-    0% {
-        left: 200px;
-        opacity: 0;
-    }
-
-    100% {
-        left: 0px;
-        opacity: 1;
-    }
-`;
-
-export const WelcomeActionsContainer = styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 2rem;
-    width: 100%;
-    margin-inline: auto;
-    overflow: hidden;
-    max-width: 450px;
-    border-radius: 16px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: rgba(145, 158, 171, 0.24) -24px 24px 72px -8px;
-    margin-bottom: 5rem;
-    transition: 0.2s;
-    animation: 1s ease ${fadeInAnimation} forwards;
-`;
-
 export const LoginFormWrapper = styled.div`
     position: relative;
-`;
-
-export const FormWrapper = styled.form`
-    margin-top: 3rem;
-    gap: 1.5rem;
-    display: flex;
-    flex-direction: column;
 `;
 
 export const HeroTitle = styled.h1`
@@ -75,7 +23,7 @@ export const HeroTitle = styled.h1`
     margin: 1rem 0;
     font-family: ${({ theme }) => theme.fontFamily.secondary};
 
-    &::after {
+    /* &::after {
         content: "";
         display: flex;
         width: calc(100% - 2rem);
@@ -84,7 +32,7 @@ export const HeroTitle = styled.h1`
         margin-top: 1rem;
         background-color: ${({ theme }) => theme.colors.primary};;
         animation: 0.5s ease ${borderAnimation};
-    }
+    } */
 `;
 
 export const HeroSubTitle = styled.p`
@@ -126,7 +74,7 @@ const formButtonStyles = css`
     }
 `;
 
-export const GetStartedButton = styled(Link)`
+export const GetStartedButton = styled.button`
     ${formButtonStyles};
     min-width: 150px;
     background-color: ${({ theme }) => theme.colors.primary};
