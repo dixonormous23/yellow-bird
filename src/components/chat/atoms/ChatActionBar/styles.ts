@@ -14,6 +14,13 @@ export const ActiveUsersWrapper = styled.div`
     align-items: center;
 `;
 
+export const CreateRoomForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+`;
+
 const sharedButtonStyles = css`
     display: flex;
     align-items: center;
@@ -52,6 +59,8 @@ export const CreateChatButton = styled.button`
 export const CreateChatSubmitButton = styled.button`
     ${sharedButtonStyles};
     padding: 0.3rem 3rem;
+    max-width: fit-content;
+    align-self: center;
 `;
 
 

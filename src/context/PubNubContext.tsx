@@ -9,7 +9,8 @@ interface PubNubContextInterface {
     fetching: boolean;
     activeUser?: User;
     activeChannel: Channel | null;
-    setActiveChannel: React.Dispatch<React.SetStateAction<Channel | null>>
+    setActiveChannel: React.Dispatch<React.SetStateAction<Channel | null>>;
+    refetchChannels: () => void;
 }
 
 interface PubNupProviderProps extends ProviderProps {
@@ -24,7 +25,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
     const [activeUser, setActiveUser] = useState<User>();
     const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
     const [fetching, setFetching] = useState<boolean>(true);
- 
+
     useEffect(() => {
         const initializeChat = async () => {
             if (!user?.uid) return;
@@ -34,19 +35,18 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
                 subscribeKey: process.env.NEXT_PUBLIC_PUBNUB_SUB_KEY,
                 userId: user?.uid,
             });
+    
             setChat(chat);
 
-            const activeUser = 
-                (await chat.getUser(user.uid)) ??
-                (await chat.createUser(user.uid, {
-                    name: user?.displayName ?? "",
-                    custom: {
-                        avatar: user.avatar ?? DEFAULT_AVATAR
-                    }
-                }));
+            const activeUser = (await chat.updateUser(user.uid, {
+                name: user?.username ?? "",
+                custom: {
+                    avatar: user.avatar ?? DEFAULT_AVATAR
+                }
+            }));
 
             const channels = (await chat.getChannels()).channels ?? [];
-                console.log(channels);
+
             setChannels(channels);
             setActiveUser(activeUser);
             setFetching(false);
@@ -54,6 +54,13 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
 
         initializeChat();
     }, [user]);
+
+    const refetchChannels = async () => {
+        if (!chat) return;
+    
+        const channels = (await chat.getChannels()).channels ?? [];
+        setChannels(channels);
+    }
 
     return (
         <PubNubContext.Provider
@@ -63,7 +70,8 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
                 fetching,
                 activeUser,
                 activeChannel,
-                setActiveChannel
+                setActiveChannel,
+                refetchChannels
             }}
         >
             {children}

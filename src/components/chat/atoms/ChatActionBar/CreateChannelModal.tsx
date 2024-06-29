@@ -3,11 +3,11 @@ import { useMemo, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { usePubNubContext } from "@/context/PubNubContext";
 import { Icon, InputField, Modal, SubmissionError } from "@/components/common";
-import { CreateChatButton, CreateChatInnerContainer, CreateChatSubmitButton } from "./styles";
+import { CreateChatButton, CreateChatInnerContainer, CreateChatSubmitButton, CreateRoomForm } from "./styles";
 
 export const CreateChannelModal: React.FC = () => {
     const { user } = useAuthContext();
-    const { chat } = usePubNubContext();
+    const { chat, channels, refetchChannels } = usePubNubContext();
 
     const [open, setOpen] = useState<boolean>(false);
     const [error, setError] = useState<string>();
@@ -21,20 +21,28 @@ export const CreateChannelModal: React.FC = () => {
         setRoomName(e.target.value);
     };
 
-    const onCreateRoom = async () => {
+    const onCreateRoom = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         if (!roomName || !chat || !user) return;
     
         const host = await chat.getUser(user.uid);
 
         if (!host) return setError("You must be logged in to create a room");
 
+        const roomNameExists = channels.find((channel) => channel.name === roomName);
+
+        if (roomNameExists) return setError("Room name already in use!");
+
         try {
-            chat?.createGroupConversation({
+            await chat?.createGroupConversation({
                 users: [host],
                 channelData: {
                     name: roomName
                 }
-            })
+            });
+
+            refetchChannels();
+
             toggleOpen();
 
         } catch (error) {
@@ -52,13 +60,15 @@ export const CreateChannelModal: React.FC = () => {
             </CreateChatButton>
             <Modal title="Create new chat" open={open} handleClose={toggleOpen}>
                 <CreateChatInnerContainer>
-                    <InputField
-                        label="Enter room name"
-                        placeholder="#general"
-                        onChange={onChange}
-                    />
-                    {error && <SubmissionError>{error}</SubmissionError>}
-                    <CreateChatSubmitButton disabled={createDisabled} onClick={onCreateRoom}>Create</CreateChatSubmitButton>
+                    <CreateRoomForm onSubmit={onCreateRoom}>
+                        <InputField
+                            label="Enter room name"
+                            placeholder="#general"
+                            onChange={onChange}
+                        />
+                        {error && <SubmissionError>{error}</SubmissionError>}
+                        <CreateChatSubmitButton type="submit" disabled={createDisabled}>Create</CreateChatSubmitButton>
+                    </CreateRoomForm>
                 </CreateChatInnerContainer>
 
             </Modal>

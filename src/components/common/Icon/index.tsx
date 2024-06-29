@@ -5,8 +5,9 @@ import styled from "styled-components";
 const EmptyChatIcon = dynamic(() => import('./icons/EmptyChatIcon'));
 const CloseIcon = dynamic(() => import('./icons/CloseIcon'));
 const PlusIcon = dynamic(() => import('./icons/PlusIcon'));
+const UploadIcon = dynamic(() => import('./icons/UploadIcon'));
 
-export type IconType = "emptyChat" | "close" | "plus";
+export type IconType = 'emptyChat' | 'close' | 'plus' | 'upload';
 
 export interface StyledIconProps {
     size?: number;
@@ -36,6 +37,8 @@ export const Icon: React.FC<IconProps> = ({ variant, ...rest }) => {
                 return <CloseIcon />;
             case 'plus':
                 return <PlusIcon />;
+            case 'upload':
+                return <UploadIcon />;
             default:
                 return null;
         }

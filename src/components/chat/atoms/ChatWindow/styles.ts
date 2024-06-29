@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const EmptyChatWrapper = styled.div`
+export const ChatRoomContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    flex-grow: 1;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     height: 100%;
