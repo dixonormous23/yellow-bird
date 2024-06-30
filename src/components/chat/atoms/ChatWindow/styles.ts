@@ -8,4 +8,9 @@ export const ChatRoomContainer = styled.div`
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     height: 100%;
+    margin: 5rem 0;
+`;
+
+export const LastMessageAnchor = styled.div`
+    height: 2rem;
 `;

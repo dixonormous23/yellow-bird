@@ -5,6 +5,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import { PubNubContextProvider } from "@/context/PubNubContext";
 import { Loader } from "@/components/common/Loader";
 import { useRouter } from "next/router";
+import { Navbar } from "@/layout/Navbar";
 
 const ChatPage: NextPage = () => {
     const router = useRouter();
@@ -16,10 +17,12 @@ const ChatPage: NextPage = () => {
 
     if (initialized && !user) {
         router.push('/');
+        return;
     };
 
     return (
         <PubNubContextProvider user={user}>
+            <Navbar />
             <AppLayout>
                 <ChatPageComponent />
             </AppLayout>

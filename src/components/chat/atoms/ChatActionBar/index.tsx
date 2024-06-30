@@ -1,18 +1,18 @@
-import { UserInterface } from "../../../../../@types";
-import { ActiveUsersWrapper, ChatActionsWrapper, CreateChatButton } from "./styles";
-import { CreateChannelModal } from "./CreateChannelModal";
+import { Channel } from "@pubnub/chat";
+import { JoinChannelModal } from "./JoinChatModal";
+import { ActiveUsersWrapper, ChatActionsWrapper } from "./styles";
 
 interface ChatActionsProps {
-    users?: UserInterface[];
+    activeChannel: Channel | null;
 }
 
-export const ChatActionBar: React.FC<ChatActionsProps> = ({ users = [] }) => {
+export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel }) => {
     return (
         <ChatActionsWrapper>
             <ActiveUsersWrapper>
-                {users?.map((user) => <strong key={user?.uid}>{user?.displayName}</strong>)}
+                <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
             </ActiveUsersWrapper>
-            <CreateChannelModal />
+            {!activeChannel && <JoinChannelModal />}
         </ChatActionsWrapper>
     );
 };

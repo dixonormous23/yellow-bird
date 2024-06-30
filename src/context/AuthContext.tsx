@@ -2,7 +2,7 @@ import { useState, useEffect, createContext, useContext, useCallback } from "rea
 
 import { auth, db, onAuthStateChanged } from "@/firebase";
 import { ProviderProps, UserInterface } from "../../@types";
-import { DEFAULT_AVATAR } from "@/constants";
+import { useRouter } from "next/router";
 
 export interface AuthContextInterface {
     user: UserInterface | null;
@@ -10,16 +10,11 @@ export interface AuthContextInterface {
     signOut: () => void;
 }
 
-const defaultUserState: UserInterface = {
-    uid: "defaultUid",
-    avatar: DEFAULT_AVATAR,
-    username: ""
-}
-
 export const AuthContext = createContext(undefined as unknown as AuthContextInterface);
 
 export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<UserInterface>({ ...defaultUserState });
+    const router = useRouter();
+    const [user, setUser] = useState<UserInterface | null>(null);
     const [initialized, setInitialized] = useState<boolean>(false);
 
     useEffect(() => {
@@ -38,6 +33,7 @@ export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
     const signOut = () => {
         auth.signOut();
+        router.replace('/');
     };
 
     return (

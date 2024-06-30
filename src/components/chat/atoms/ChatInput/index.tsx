@@ -14,7 +14,9 @@ export const ChatInput: React.FC = () => {
         
         if (e.code === "Enter" && !e.shiftKey && inputRef.current) {
             inputRef.current.innerText = '';
-            await activeChannel.sendText(message, { storeInHistory: true });
+            const formattedMessage = message.replaceAll('\n', '<br />');
+            await activeChannel.sendText(formattedMessage, { storeInHistory: true });
+            document.getElementById('chatAnchor')?.scrollIntoView();
         };
     
     }, [activeChannel])
@@ -30,7 +32,15 @@ export const ChatInput: React.FC = () => {
     return (
         <ChatInputContainer>
             <InputInnerContainer>
-                <StyledChatInput contentEditable ref={inputRef} $currentValue={inputRef.current?.innerText} />
+                <StyledChatInput
+                    contentEditable
+                    role="textbox"
+                    ref={inputRef}
+                    $currentValue={inputRef.current?.innerText}
+                    onKeyDown={(e) => {
+                        if (e.code === 'Enter' && !e.shiftKey) e.preventDefault();
+                    }}
+                />
                 <button type="submit">Send</button>
             </InputInnerContainer>
         </ChatInputContainer>

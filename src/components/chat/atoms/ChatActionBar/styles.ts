@@ -1,15 +1,21 @@
 import styled, { css } from "styled-components";
+import { sharedButtonStyles } from "../ChannelList/sharedStyles";
 
 export const ChatActionsWrapper = styled.div`
+    position: absolute;
     padding: 0.5rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: -webkit-fill-available;
+    z-index: 1;
+    background: white;
+    height: 48px;
     border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 export const ActiveUsersWrapper = styled.div`
-    margin-block: 1.5rem;
+    height: 65px;
     display: flex;
     align-items: center;
 `;
@@ -21,36 +27,17 @@ export const CreateRoomForm = styled.form`
     width: 100%;
 `;
 
-const sharedButtonStyles = css`
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    transition: 0.2s;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
-    border: 1px solid ${({ theme }) => theme.colors.secondary};
-    background-color: ${({ theme }) => theme.colors.secondary};
-
-    &:hover:not([disabled]) {
-        background-color: white;
-        color: ${({ theme }) => theme.colors.secondary};
-
-        svg {
-            fill: ${({ theme }) => theme.colors.secondary};
-        }
-    }
-
-    &:disabled {
-        opacity: 0.6;
-        cursor: default;
-    }
-`;
 
 export const CreateChatButton = styled.button`
     ${sharedButtonStyles};
     padding: 0.2rem 1rem;
-    span {
+
+    &:hover:not([disabled]) {
+        background-color: white;
+    }
+
+    label {
+        cursor: pointer;
         margin-right: 0.5rem;
     }
 `;
