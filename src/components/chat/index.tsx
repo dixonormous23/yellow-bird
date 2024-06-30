@@ -18,7 +18,7 @@ export const ChatPageComponent = () => {
                 <h1>Chat</h1>
                 <ChatRoomStack>
                     <ChannelList />
-                    <CurrentChatWindow>
+                    <CurrentChatWindow id="chat-window">
                         <ChatRoomWrapper>
                             <ChatActionBar activeChannel={activeChannel} />
                             {activeChannel ? <ChatWindow /> : <EmptyChat />}

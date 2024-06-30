@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ChatRoomContainer, LastMessageAnchor } from "./styles";
 import { usePubNubContext } from "@/context/PubNubContext";
 import { Message } from "@pubnub/chat";
+import { ChatMessage } from "../MessageItem";
 
 export const ChatWindow: React.FC = () => {
     const { activeChannel } = usePubNubContext();
@@ -36,11 +37,13 @@ export const ChatWindow: React.FC = () => {
 
     return (
         <ChatRoomContainer>
-            {messages?.map((item: Message, i: number) => (
-                <div key={`${item.timetoken}-${i}`}>
-                    <p dangerouslySetInnerHTML={{ __html: item.content.text }} />
-                </div>
-            ))}
+            {messages?.map((message: Message, i: number, arr: Message[]) => {
+                // Get previous
+                const stack = arr[i - 1]?.userId === message.userId;
+                return (
+                    <ChatMessage key={`${message.timetoken}-${i}`} message={message} stack={stack} />
+                )
+            })}
             <LastMessageAnchor id="chatAnchor" />
         </ChatRoomContainer>
     )

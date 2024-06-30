@@ -61,14 +61,14 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             }));
 
             const channels = (await chat.getChannels()).channels ?? [];
-            const memberships = (await activeUser.getMemberships()).memberships;
+            // const memberships = (await activeUser.getMemberships()).memberships;
 
-            const userChannels = await Promise.all(channels.filter((channel) => {
-                return memberships.some(async (member) =>
-                    (await channel.getMembers()).members.find((_member) => _member.user.id === member.user.id))
-            }));
+            // const userChannels = await Promise.all(channels.filter((channel) => {
+            //     return memberships.some(async (member) =>
+            //         (await channel.getMembers()).members.find((_member) => _member.user.id === member.user.id))
+            // }));
 
-            setChannels(userChannels);
+            setChannels(channels);
             setActiveUser(activeUser);
             setFetching(false);
         };
