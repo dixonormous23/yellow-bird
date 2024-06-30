@@ -7,7 +7,7 @@ import { CreateChatInnerContainer, CreateChatSubmitButton, CreateRoomButton, Cre
 
 export const CreateChannelModal: React.FC = () => {
     const { user } = useAuthContext();
-    const { chat, channels, refetchChannels } = usePubNubContext();
+    const { chat, channels } = usePubNubContext();
 
     const [open, setOpen] = useState<boolean>(false);
     const [error, setError] = useState<string>();
@@ -49,7 +49,7 @@ export const CreateChannelModal: React.FC = () => {
                 }
             });
 
-            refetchChannels();
+            // refetchChannels();
             setSubmitting(false);
             toggleOpen();
 

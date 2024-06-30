@@ -1,12 +1,24 @@
 import styled from "styled-components";
 import { formButtonStyles } from "@/components/common";
-import { sharedButtonStyles, sharedListItemStyles } from "./sharedStyles";
+import { breakpoint } from "@/styles/utils";
+import { sharedListItemStyles } from "./sharedStyles";
 
-export const ChannelListContainer = styled.div`
+export const ChannelListContainer = styled.div<{ $condense: boolean; }>`
     display: flex;
     flex-direction: column;
     min-width: 270px;
     border-right: 1px solid ${({ theme }) => theme.colors.border};
+
+    ${breakpoint('mobile')} {
+        min-width: 100%;
+        position: absolute;
+        z-index: 10;
+        background: white;
+        height: -webkit-fill-available;
+        border-radius: 10px;
+        transition: 0.2s;
+        left: ${(props) => props.$condense ? -400 : 0}px;
+    }
 `;
 
 export const UserActionsContainer = styled.div`

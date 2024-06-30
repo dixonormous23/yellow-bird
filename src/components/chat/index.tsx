@@ -11,14 +11,13 @@ import {
 
 export const ChatPageComponent = () => {
     const { activeChannel } = usePubNubContext();
-
     return (
         <ChatComponentContainer>
             <ChatComponentInnerContainer>
                 <h1>Chat</h1>
                 <ChatRoomStack>
                     <ChannelList />
-                    <CurrentChatWindow>
+                    <CurrentChatWindow id="chat-window">
                         <ChatRoomWrapper>
                             <ChatActionBar activeChannel={activeChannel} />
                             {activeChannel ? <ChatWindow /> : <EmptyChat />}

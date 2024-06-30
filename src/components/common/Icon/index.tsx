@@ -2,14 +2,24 @@ import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
 
-const EmptyChatIcon = dynamic(() => import('./icons/EmptyChatIcon'));
-const CloseIcon = dynamic(() => import('./icons/CloseIcon'));
+const BackIcon = dynamic(() => import('./icons/BackIcon'));
 const PlusIcon = dynamic(() => import('./icons/PlusIcon'));
+const MoreIcon = dynamic(() => import('./icons/MoreIcon'));
+const CloseIcon = dynamic(() => import('./icons/CloseIcon'));
 const UploadIcon = dynamic(() => import('./icons/UploadIcon'));
 const JoinChatIcon = dynamic(() => import('./icons/JoinChatIcon'));
-const MoreIcon = dynamic(() => import('./icons/MoreIcon'));
+const EmptyChatIcon = dynamic(() => import('./icons/EmptyChatIcon'));
+const SendMessageIcon = dynamic(() => import('./icons/SendMessageIcon'));
 
-export type IconType = 'emptyChat' | 'close' | 'plus' | 'upload' | 'joinChat' | 'more';
+export type IconType =
+    'emptyChat' |
+    'close' |
+    'plus' |
+    'upload' |
+    'joinChat' |
+    'more' |
+    'sendMessage' |
+    'back';
 
 export interface StyledIconProps {
     size?: number;
@@ -45,6 +55,10 @@ export const Icon: React.FC<IconProps> = ({ variant, ...rest }) => {
                 return <JoinChatIcon />;
             case 'more':
                 return <MoreIcon />;
+            case 'sendMessage':
+                return <SendMessageIcon />;
+            case 'back':
+                return <BackIcon />;
             default:
                 return null;
         }

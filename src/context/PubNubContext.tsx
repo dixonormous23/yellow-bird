@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Channel, Chat, User } from '@pubnub/chat';
 import { ProviderProps, UserInterface } from "../../@types";
 import { DEFAULT_AVATAR } from "@/constants";
@@ -49,6 +49,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
                 publishKey: process.env.NEXT_PUBLIC_PUBNUB_PUBLISH_KEY,
                 subscribeKey: process.env.NEXT_PUBLIC_PUBNUB_SUB_KEY,
                 userId: user?.uid,
+                typingTimeout: 1000
             });
     
             setChat(chat);
@@ -61,14 +62,8 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             }));
 
             const channels = (await chat.getChannels()).channels ?? [];
-            const memberships = (await activeUser.getMemberships()).memberships;
 
-            const userChannels = await Promise.all(channels.filter((channel) => {
-                return memberships.some(async (member) =>
-                    (await channel.getMembers()).members.find((_member) => _member.user.id === member.user.id))
-            }));
-
-            setChannels(userChannels);
+            setChannels(channels);
             setActiveUser(activeUser);
             setFetching(false);
         };

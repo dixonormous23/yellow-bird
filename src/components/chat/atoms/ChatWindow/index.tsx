@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { ChatRoomContainer, LastMessageAnchor } from "./styles";
-import { usePubNubContext } from "@/context/PubNubContext";
 import { Message } from "@pubnub/chat";
+import { usePubNubContext } from "@/context/PubNubContext";
+import { ChatMessage } from "../MessageItem";
+import { ChatAnchor } from "./ChatAnchor";
+import { ChatRoomContainer } from "./styles";
 
 export const ChatWindow: React.FC = () => {
     const { activeChannel } = usePubNubContext();
@@ -13,15 +15,7 @@ export const ChatWindow: React.FC = () => {
         const history = (await activeChannel.getHistory()).messages ?? [];
 
         setMessages(history);
-        
-        const anchor = document.getElementById('chatAnchor');
-
-        if (!anchor) return console.log('no anchor');
-
-        setTimeout(() => {
-            anchor?.scrollIntoView();
-        })
-    }, [activeChannel])
+    }, [activeChannel]);
 
     useEffect(() => {
         fetchChannelHistory();
@@ -29,19 +23,18 @@ export const ChatWindow: React.FC = () => {
 
     useEffect(() => {
         if (!activeChannel) return;
-        activeChannel.connect((message) => {
-            setMessages((prev) => [...prev, message])
-        });
+        activeChannel.connect((message) => setMessages((prev) => [...prev, message]));
     }, [activeChannel]);
+
 
     return (
         <ChatRoomContainer>
-            {messages?.map((item: Message, i: number) => (
-                <div key={`${item.timetoken}-${i}`}>
-                    <p dangerouslySetInnerHTML={{ __html: item.content.text }} />
-                </div>
-            ))}
-            <LastMessageAnchor id="chatAnchor" />
+            {messages?.map((message: Message, i: number, arr: Message[]) => {
+                // Get previous message and compare userIds to stack message block
+                const stack = arr[i - 1]?.userId === message.userId;
+                return <ChatMessage key={`${message.timetoken}-${i}`} message={message} stack={stack} />;
+            })}
+            <ChatAnchor messages={messages} />
         </ChatRoomContainer>
     )
 }

@@ -19,20 +19,37 @@ export const ChatInputContainer = styled.div`
     border-top: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
-export const InputInnerContainer = styled.div`
+export const InputInnerContainer = styled.div<{ $channelName: string }>`
     display: flex;
     flex-grow: 1;
     align-items: center;
+
+    span[contenteditable]:empty:focus::before,
+    span[contenteditable]:empty::before {
+        color: gray;
+        content: "${(props) => `Message ${props.$channelName}`}";
+    }
 `;
 
 export const StyledChatInput = styled.span<{ $currentValue?: string; }>`
     width: 100%;
-    padding-left: 1rem;
+    padding-inline: 1rem;
     font-size: 1rem;
     position: relative;
     flex-grow: 1;
     border: none;
     outline: none;
     resize: none;
+    background: rgba(0, 0, 0, 0.05);
+    margin-inline: 2rem;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
     font-family: ${({ theme }) => theme.fontFamily.primary};
+`;
+
+export const SubmitButton = styled.button`
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-right: 0.5rem;
 `;

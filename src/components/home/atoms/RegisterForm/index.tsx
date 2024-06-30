@@ -1,15 +1,14 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { FirebaseError } from 'firebase/app';
 import { useRouter } from 'next/router';
 
-import { AvatarModal } from './AvatarModal';
+import { formattedFirebaseError } from '@/utils/formattedFirebaseError';
 import { DEFAULT_AVATAR } from '@/constants';
 import { auth, db } from '@/firebase';
 import { InputField, StyledForm, FormSubmitContainer, SubmitButton, SubmissionError } from '@/components/common';
+import { AvatarModal } from './AvatarModal';
 import { AvatarContainer, FormSubtitle, FormTitle, UploadAvatarButton, UserAvatar } from './styles';
-import { formattedFirebaseError } from '@/utils/formattedFirebaseError';
 
 interface RegisterFormState {
     username: string;
@@ -52,7 +51,7 @@ export const RegisterForm: React.FC = () => {
             const { user } = await createUserWithEmailAndPassword(auth, state.email, state.password)
 
             await db.set(`/users/${user.uid}`, { username: state.username, avatar: state.avatar ?? DEFAULT_AVATAR });
-            router.push('/chat');
+            router.replace('/chat');
         } catch (error) {
             setError(formattedFirebaseError(error));
             setSubmitting(false);

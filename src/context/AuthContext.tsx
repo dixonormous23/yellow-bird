@@ -23,7 +23,6 @@ export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
         
             const userData = await db.get<UserInterface>(`/users/${user.uid}`);
             setUser((prev) => ({
-                ...prev,
                 ...user,
                 ...userData
             }));

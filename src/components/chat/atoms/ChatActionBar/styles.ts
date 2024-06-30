@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { sharedButtonStyles } from "../ChannelList/sharedStyles";
 
 export const ChatActionsWrapper = styled.div`
@@ -17,7 +17,14 @@ export const ChatActionsWrapper = styled.div`
 export const ActiveUsersWrapper = styled.div`
     height: 65px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    small {
+        opacity: 0.7;
+        font-size: 0.7rem;
+        margin-top: 0.2rem;
+    }
 `;
 
 export const CreateRoomForm = styled.form`

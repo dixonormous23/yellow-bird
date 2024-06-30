@@ -100,5 +100,5 @@ export const AvatarModal: React.FC<AvatarModalProps> = ({ open, handleClose, han
                 <SaveAvatarButton disabled={!avatar} onClick={handleSaveAndClose}>Save</SaveAvatarButton>
             </SaveAvatarContainer>
         </Modal>
-    )
-}
+    );
+};
