@@ -16,6 +16,7 @@ const ChatPage: NextPage = () => {
 
     if (initialized && !user) {
         router.push('/');
+        return;
     };
 
     return (

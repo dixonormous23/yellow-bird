@@ -6,13 +6,14 @@ import { Message } from "@pubnub/chat";
 export const ChatWindow: React.FC= () => {
     const { activeChannel } = usePubNubContext();
     const [messages, setMessages] = useState<Message[]>([]);
+    const [channelId, setChannelId] = useState<string>();
 
     useEffect(() => {
         const fetchChannelHistory = async () => {
             if (!activeChannel) return;
 
             const history = (await activeChannel.getHistory()).messages ?? [];
-            console.log(history);
+
             setMessages(history);
         };
         fetchChannelHistory();

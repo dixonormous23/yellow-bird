@@ -5,7 +5,6 @@ export interface ProviderProps {
 }
 
 export interface UserInterface extends Partial<User> {
-    uid: string;
     username: string;
     avatar: string;
 }

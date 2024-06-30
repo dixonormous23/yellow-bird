@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
+
 import { auth, signInWithEmailAndPassword } from '@/firebase';
 import { formattedFirebaseError } from '@/utils/formattedFirebaseError';
 import { DividerText } from '@/components/common/DividerText';
@@ -27,6 +29,8 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => {
+    const router = useRouter();
+
     const [state, setState] = useState<FormState>({
         email: '',
         password: ''
@@ -47,6 +51,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => 
         setSubmitting(true);
         try {
             await signInWithEmailAndPassword(auth, state.email, state.password);
+            router.push('/chat');
         } catch (error) {
             setError(formattedFirebaseError(error));
             setSubmitting(false);

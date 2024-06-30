@@ -20,10 +20,10 @@ export const ChatPageComponent = () => {
                     <ChannelList />
                     <CurrentChatWindow>
                         <ChatRoomWrapper>
-                            <ChatActionBar />
+                            <ChatActionBar activeChannel={activeChannel} />
                             {activeChannel ? <ChatWindow /> : <EmptyChat />}
-                            {activeChannel && <ChatInput />}
                         </ChatRoomWrapper>
+                        {activeChannel && <ChatInput />}
                     </CurrentChatWindow>
                 </ChatRoomStack>
 

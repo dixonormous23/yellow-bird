@@ -23,7 +23,7 @@ export const CreateChannelModal: React.FC = () => {
 
     const onCreateRoom = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!roomName || !chat || !user) return;
+        if (!roomName || !chat || !user?.uid) return;
     
         const host = await chat.getUser(user.uid);
 

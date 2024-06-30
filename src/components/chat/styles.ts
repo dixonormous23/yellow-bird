@@ -12,6 +12,7 @@ export const ChatComponentInnerContainer = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 80vh;
+    margin-inline: 2rem;
     max-width: ${({ theme }) => theme.widths.maxContent};
 `;
 
@@ -20,8 +21,8 @@ export const ChatRoomStack = styled.div`
     flex: 1 1 0px;
     position: relative;
     border-radius: 10px;
-    border: 1px solid ${({ theme }) => theme.colors.border};
     overflow: hidden;
+    border: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 export const CurrentChatWindow = styled.div`

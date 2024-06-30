@@ -9,7 +9,7 @@ export const ChatActionsWrapper = styled.div`
 `;
 
 export const ActiveUsersWrapper = styled.div`
-    margin-block: 1.5rem;
+    height: 65px;
     display: flex;
     align-items: center;
 `;
