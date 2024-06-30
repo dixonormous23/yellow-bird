@@ -5,13 +5,14 @@ import { usePubNubContext } from "@/context/PubNubContext";
 import { Icon, InputField, Modal, SubmissionError } from "@/components/common";
 import { CreateChatButton, CreateChatInnerContainer, CreateChatSubmitButton, CreateRoomForm } from "./styles";
 
-export const CreateChannelModal: React.FC = () => {
+export const JoinChannelModal: React.FC = () => {
     const { user } = useAuthContext();
-    const { chat, channels, refetchChannels } = usePubNubContext();
+    const { chat, refetchChannels } = usePubNubContext();
 
     const [open, setOpen] = useState<boolean>(false);
     const [error, setError] = useState<string>();
-    const [roomName, setRoomName] = useState<string>();
+    const [roomId, setRoomName] = useState<string>('');
+    const [submitting, setSubmitting] = useState<boolean>(false);
 
     const toggleOpen = () => {
         setOpen(!open);
@@ -23,51 +24,53 @@ export const CreateChannelModal: React.FC = () => {
 
     const onCreateRoom = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!roomName || !chat || !user?.uid) return;
-    
+        if (!roomId || !chat || !user?.uid || submitting) return;
+
+        setSubmitting(true);
         const host = await chat.getUser(user.uid);
 
-        if (!host) return setError("You must be logged in to create a room");
-
-        const roomNameExists = channels.find((channel) => channel.name === roomName);
-
-        if (roomNameExists) return setError("Room name already in use!");
+        if (!host) {
+            setSubmitting(false);
+            return setError("You must be logged in to create a room");
+        };
 
         try {
-            await chat?.createGroupConversation({
-                users: [host],
-                channelData: {
-                    name: roomName
-                }
-            });
+            const channel = await chat.getChannel(roomId.trim())
 
+            if (!channel) {
+                setSubmitting(false);
+                return setError("Invalid room id");
+            }
+
+            await channel.invite(host)
             refetchChannels();
-
+            setSubmitting(false);
             toggleOpen();
 
         } catch (error) {
             setError(error as string);
+            setSubmitting(false);
         }
     };
 
-    const createDisabled = useMemo(() => !roomName?.length, [roomName]);
+    const createDisabled = useMemo(() => !(roomId?.length > 0 && !submitting), [roomId, submitting]);
 
     return (
         <>
             <CreateChatButton onClick={toggleOpen}>
-                <span>Create chat</span>
-                <Icon variant="plus" size={12} fill="white" />
+                <label>Join Chat</label>
+                <Icon variant="joinChat" size={12} fill="white" />
             </CreateChatButton>
-            <Modal title="Create new chat" open={open} handleClose={toggleOpen}>
+            <Modal title="Join chat" open={open} handleClose={toggleOpen}>
                 <CreateChatInnerContainer>
                     <CreateRoomForm onSubmit={onCreateRoom}>
                         <InputField
-                            label="Enter room name"
-                            placeholder="#general"
+                            label="Enter room ID"
+                            placeholder="c6c649cb-747e-497a-9c45-f806b73283fe"
                             onChange={onChange}
                         />
                         {error && <SubmissionError>{error}</SubmissionError>}
-                        <CreateChatSubmitButton type="submit" disabled={createDisabled}>Create</CreateChatSubmitButton>
+                        <CreateChatSubmitButton type="submit" disabled={createDisabled}>Join</CreateChatSubmitButton>
                     </CreateRoomForm>
                 </CreateChatInnerContainer>
 

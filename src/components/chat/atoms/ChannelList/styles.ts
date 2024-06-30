@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { formButtonStyles } from "@/components/common";
+import { sharedButtonStyles, sharedListItemStyles } from "./sharedStyles";
 
 export const ChannelListContainer = styled.div`
     display: flex;
@@ -15,14 +17,24 @@ export const UserActionsContainer = styled.div`
 `;
 
 export const Username = styled.span`
-    margin-left: 1rem;;
+    margin-left: 1rem;
+`;
+
+export const JoinChannelContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const JoinChannelButton = styled.div`
+    ${formButtonStyles};
 `;
 
 export const ChannelItemsContainer = styled.nav`
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 0.5rem;
+    margin-top: 2rem;
 
     small {
         text-align: center;
@@ -30,14 +42,13 @@ export const ChannelItemsContainer = styled.nav`
 `;
 
 export const ChannelItemWrapper = styled.div`
-    display: flex;
-    padding: 0.3rem 1rem;
-    transition: 0.2s;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    margin-inline: 0.5rem;
-    border-radius: 10px;
-    &:hover {
-        background-color: rgba(0,0,0,0.05);
-    }
+    ${sharedListItemStyles};
+    justify-content: space-between;
 `;
+
+export const ClipboardButton = styled.button`
+    ${sharedButtonStyles};
+    padding: 0.2rem 1rem;
+
+`;
+

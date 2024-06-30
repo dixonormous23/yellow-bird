@@ -1,6 +1,7 @@
 import { UserInterface } from "../../../../../@types";
-import { ActiveUsersWrapper, ChatActionsWrapper, CreateChatButton } from "./styles";
-import { CreateChannelModal } from "./CreateChannelModal";
+import { JoinChannelModal } from "./JoinChatModal";
+import { ActiveUsersWrapper, ChatActionsWrapper, ClipboardButton, CreateChatButton } from "./styles";
+// import { CreateChannelModal } from "./CreateChannelModal";
 import { Channel } from "@pubnub/chat";
 
 interface ChatActionsProps {
@@ -13,7 +14,7 @@ export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel }) => 
             <ActiveUsersWrapper>
                 <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
             </ActiveUsersWrapper>
-            <CreateChannelModal />
+            {!activeChannel && <JoinChannelModal />}
         </ChatActionsWrapper>
     );
 };

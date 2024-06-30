@@ -6,8 +6,10 @@ const EmptyChatIcon = dynamic(() => import('./icons/EmptyChatIcon'));
 const CloseIcon = dynamic(() => import('./icons/CloseIcon'));
 const PlusIcon = dynamic(() => import('./icons/PlusIcon'));
 const UploadIcon = dynamic(() => import('./icons/UploadIcon'));
+const JoinChatIcon = dynamic(() => import('./icons/JoinChatIcon'));
+const MoreIcon = dynamic(() => import('./icons/MoreIcon'));
 
-export type IconType = 'emptyChat' | 'close' | 'plus' | 'upload';
+export type IconType = 'emptyChat' | 'close' | 'plus' | 'upload' | 'joinChat' | 'more';
 
 export interface StyledIconProps {
     size?: number;
@@ -39,6 +41,10 @@ export const Icon: React.FC<IconProps> = ({ variant, ...rest }) => {
                 return <PlusIcon />;
             case 'upload':
                 return <UploadIcon />;
+            case 'joinChat':
+                return <JoinChatIcon />;
+            case 'more':
+                return <MoreIcon />;
             default:
                 return null;
         }

@@ -2,6 +2,7 @@ import { useState, useEffect, createContext, useContext, useCallback } from "rea
 
 import { auth, db, onAuthStateChanged } from "@/firebase";
 import { ProviderProps, UserInterface } from "../../@types";
+import { useRouter } from "next/router";
 
 export interface AuthContextInterface {
     user: UserInterface | null;
@@ -12,6 +13,7 @@ export interface AuthContextInterface {
 export const AuthContext = createContext(undefined as unknown as AuthContextInterface);
 
 export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
+    const router = useRouter();
     const [user, setUser] = useState<UserInterface | null>(null);
     const [initialized, setInitialized] = useState<boolean>(false);
 
@@ -31,6 +33,7 @@ export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
     const signOut = () => {
         auth.signOut();
+        router.replace('/');
     };
 
     return (

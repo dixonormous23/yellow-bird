@@ -42,6 +42,7 @@ const sharedButtonStyles = css`
         color: ${({ theme }) => theme.colors.secondary};
 
         svg {
+            cursor: pointer;
             fill: ${({ theme }) => theme.colors.secondary};
         }
     }
@@ -52,10 +53,22 @@ const sharedButtonStyles = css`
     }
 `;
 
+export const ClipboardButton = styled.button`
+    ${sharedButtonStyles};
+    padding: 0.2rem 1rem;
+
+`;
+
 export const CreateChatButton = styled.button`
     ${sharedButtonStyles};
     padding: 0.2rem 1rem;
-    span {
+
+    &:hover:not([disabled]) {
+        background-color: white;
+    }
+
+    label {
+        cursor: pointer;
         margin-right: 0.5rem;
     }
 `;

@@ -1,7 +1,7 @@
-import { Avatar } from "@/components/common";
+import { Avatar, Icon } from "@/components/common";
 import { usePubNubContext } from "@/context/PubNubContext";
-import { DEFAULT_AVATAR } from "@/constants";
-import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, UserActionsContainer, Username } from "./styles";
+import { CreateChannelModal, ChannelActions } from "./molecules";
+import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, JoinChannelContainer, UserActionsContainer, Username } from "./styles";
 
 export const ChannelList: React.FC = () => {
     const { fetching, channels, activeUser, setActiveChannel } = usePubNubContext();
@@ -19,11 +19,11 @@ export const ChannelList: React.FC = () => {
                     channels.map((channel) => (
                         <ChannelItemWrapper key={channel.id} onClick={() => setActiveChannel(channel)}>
                             <span>{channel.name ?? channel.id}</span>
+                            <ChannelActions channel={channel} />
                         </ChannelItemWrapper>
                     ))
-                ) : (
-                    <small>No chats!</small>
-                )}
+                ) : null}
+                {!fetching && <CreateChannelModal />}
             </ChannelItemsContainer>
         </ChannelListContainer>
     );

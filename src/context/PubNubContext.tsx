@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Channel, Chat, User } from '@pubnub/chat';
 import { ProviderProps, UserInterface } from "../../@types";
 import { DEFAULT_AVATAR } from "@/constants";
@@ -26,6 +26,21 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
     const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
     const [fetching, setFetching] = useState<boolean>(true);
 
+    // @TODO - refactor this to be DRY, possible throw in API call or in separate useEffect
+    const refetchChannels = useCallback(async () => {
+        if (!chat || !activeUser) return;
+
+        const channels = (await chat.getChannels()).channels ?? [];
+        const memberships = (await activeUser.getMemberships()).memberships;
+
+        const userChannels = await Promise.all(channels.filter((channel) => {
+            return memberships.some(async (member) =>
+                (await channel.getMembers()).members.find((_member) => _member.user.id === member.user.id))
+        }));
+
+        setChannels(userChannels);
+    }, [activeUser, chat])
+
     useEffect(() => {
         const initializeChat = async () => {
             if (!user?.uid) return;
@@ -46,21 +61,20 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             }));
 
             const channels = (await chat.getChannels()).channels ?? [];
+            const memberships = (await activeUser.getMemberships()).memberships;
 
-            setChannels(channels);
+            const userChannels = await Promise.all(channels.filter((channel) => {
+                return memberships.some(async (member) =>
+                    (await channel.getMembers()).members.find((_member) => _member.user.id === member.user.id))
+            }));
+
+            setChannels(userChannels);
             setActiveUser(activeUser);
             setFetching(false);
         };
 
         initializeChat();
     }, [user]);
-
-    const refetchChannels = async () => {
-        if (!chat) return;
-    
-        const channels = (await chat.getChannels()).channels ?? [];
-        setChannels(channels);
-    };
 
     return (
         <PubNubContext.Provider
