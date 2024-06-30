@@ -45,10 +45,3 @@ export const ChannelItemWrapper = styled.div`
     ${sharedListItemStyles};
     justify-content: space-between;
 `;
-
-export const ClipboardButton = styled.button`
-    ${sharedButtonStyles};
-    padding: 0.2rem 1rem;
-
-`;
-

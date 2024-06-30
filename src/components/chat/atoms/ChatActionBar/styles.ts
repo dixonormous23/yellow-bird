@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { sharedButtonStyles } from "../ChannelList/sharedStyles";
 
 export const ChatActionsWrapper = styled.div`
     position: absolute;
@@ -26,38 +27,6 @@ export const CreateRoomForm = styled.form`
     width: 100%;
 `;
 
-const sharedButtonStyles = css`
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    transition: 0.2s;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
-    border: 1px solid ${({ theme }) => theme.colors.secondary};
-    background-color: ${({ theme }) => theme.colors.secondary};
-
-    &:hover:not([disabled]) {
-        background-color: white;
-        color: ${({ theme }) => theme.colors.secondary};
-
-        svg {
-            cursor: pointer;
-            fill: ${({ theme }) => theme.colors.secondary};
-        }
-    }
-
-    &:disabled {
-        opacity: 0.6;
-        cursor: default;
-    }
-`;
-
-export const ClipboardButton = styled.button`
-    ${sharedButtonStyles};
-    padding: 0.2rem 1rem;
-
-`;
 
 export const CreateChatButton = styled.button`
     ${sharedButtonStyles};

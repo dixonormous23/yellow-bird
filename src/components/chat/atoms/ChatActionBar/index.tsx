@@ -1,8 +1,6 @@
-import { UserInterface } from "../../../../../@types";
-import { JoinChannelModal } from "./JoinChatModal";
-import { ActiveUsersWrapper, ChatActionsWrapper, ClipboardButton, CreateChatButton } from "./styles";
-// import { CreateChannelModal } from "./CreateChannelModal";
 import { Channel } from "@pubnub/chat";
+import { JoinChannelModal } from "./JoinChatModal";
+import { ActiveUsersWrapper, ChatActionsWrapper } from "./styles";
 
 interface ChatActionsProps {
     activeChannel: Channel | null;
