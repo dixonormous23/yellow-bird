@@ -1,16 +1,6 @@
+import styled from "styled-components";
 import { breakpoint } from "@/styles/utils";
-import Link from "next/link";
-import styled, { keyframes, css } from "styled-components";
-
-const borderAnimation = keyframes`
-    from {
-        width: calc(0%);
-    }
-
-    to {
-        width: calc(100% - 2rem);
-    }
-`;
+import { formButtonStyles } from "@/components/common";
 
 export const LoginFormWrapper = styled.div`
     position: relative;
@@ -42,30 +32,6 @@ export const RegisterAccountWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`;
-
-const formButtonStyles = css`
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    padding: 0.5rem 2rem;
-    font-weight: 500;
-    border-radius: 20px;
-    transition: 0.2s;
-    cursor: pointer;
-    text-align: center;
-    border: 1px solid ${({ theme }) => theme.colors.secondary};
-    background-color: ${({ theme }) => theme.colors.secondary};
-
-    &:hover:not([disabled]) {
-        background-color: white;
-        color: ${({ theme }) => theme.colors.secondary};
-    }
-
-    &:disabled {
-        opacity: 0.5;
-        cursor: default;
-    }
 `;
 
 export const GetStartedButton = styled.button`

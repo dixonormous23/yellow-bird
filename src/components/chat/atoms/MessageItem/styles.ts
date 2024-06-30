@@ -1,5 +1,5 @@
-import { breakpoint } from "@/styles/utils";
 import styled from "styled-components";
+import { breakpoint } from "@/styles/utils";
 
 export const MessageItemWrapper = styled.div`
     display: flex;

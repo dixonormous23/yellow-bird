@@ -1,5 +1,5 @@
-import { Message } from "@pubnub/chat";
 import { useEffect } from "react";
+import { Message } from "@pubnub/chat";
 import { LastMessageAnchor } from "./styles";
 
 interface ChatAnchorProps {
@@ -10,7 +10,7 @@ export const ChatAnchor: React.FC<ChatAnchorProps> = ({ messages }) => {
     useEffect(() => {
         const anchor = document.getElementById('chatAnchor');
 
-        if (!anchor) return console.log('no anchor');
+        if (!anchor) return;
 
         anchor.scrollIntoView(true);
     }, [messages]);

@@ -1,7 +1,7 @@
 import { Channel } from "@pubnub/chat";
+import { useEffect, useState } from "react";
 import { JoinChannelModal } from "./JoinChatModal";
 import { ActiveUsersWrapper, ChatActionsWrapper } from "./styles";
-import { useEffect, useMemo, useState } from "react";
 
 interface ChatActionsProps {
     activeChannel: Channel | null;

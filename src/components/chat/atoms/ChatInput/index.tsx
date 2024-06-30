@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import moment from "moment";
 
 import { usePubNubContext } from "@/context/PubNubContext";
 import { useAuthContext } from "@/context/AuthContext";
-import { ChatInputContainer, InputInnerContainer, StyledChatInput, SubmitButton } from "./styles";
 import { Icon } from "@/components/common";
+import { ChatInputContainer, InputInnerContainer, StyledChatInput, SubmitButton } from "./styles";
 
 export const ChatInput: React.FC = () => {
     const { user } = useAuthContext();

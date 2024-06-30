@@ -1,8 +1,8 @@
 import { Message } from "@pubnub/chat";
-import { MessageAvatarWrapper, MessageBodyWrapper, MessageDataWrapper, MessageItemWrapper } from "./styles";
+import moment from "moment";
 import { Avatar } from "@/components/common";
 import { DEFAULT_AVATAR } from "@/constants";
-import moment from "moment";
+import { MessageAvatarWrapper, MessageBodyWrapper, MessageDataWrapper, MessageItemWrapper } from "./styles";
 
 interface ChatMessageProps {
     message: Message;

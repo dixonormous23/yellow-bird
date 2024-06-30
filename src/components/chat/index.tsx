@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { usePubNubContext } from "@/context/PubNubContext";
 import { ChannelList, ChatActionBar, ChatInput, ChatWindow, EmptyChat } from "./atoms";
 import {
@@ -12,9 +11,6 @@ import {
 
 export const ChatPageComponent = () => {
     const { activeChannel } = usePubNubContext();
-
-    const [condenseChannels, setCondenseChannels] = useState<boolean>(false);
-
     return (
         <ChatComponentContainer>
             <ChatComponentInnerContainer>

@@ -1,10 +1,11 @@
-import { Avatar, Icon } from "@/components/common";
-import { usePubNubContext } from "@/context/PubNubContext";
-import { CreateChannelModal, ChannelActions } from "./molecules";
-import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, UserActionsContainer, Username } from "./styles";
 import { useCallback, useEffect, useState } from "react";
 import { Channel } from "@pubnub/chat";
+
+import { Avatar } from "@/components/common";
+import { usePubNubContext } from "@/context/PubNubContext";
 import { useWindowWidth } from "@/hooks/useWindowWidth";
+import { CreateChannelModal, ChannelActions } from "./molecules";
+import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, UserActionsContainer, Username } from "./styles";
 
 export const ChannelList: React.FC = () => {
     const { isMobile } = useWindowWidth();
@@ -34,10 +35,8 @@ export const ChannelList: React.FC = () => {
     const onChannelItemClick = (channel: Channel) => {
         setActiveChannel(channel);
 
-        if (isMobile) {
-            setCondense(true);
-        }
-    }
+        setCondense(isMobile);
+    };
 
     return (
         <ChannelListContainer $condense={condense}>
