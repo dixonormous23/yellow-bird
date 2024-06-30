@@ -1,10 +1,15 @@
 import styled, { css } from "styled-components";
 
 export const ChatActionsWrapper = styled.div`
+    position: absolute;
     padding: 0.5rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: -webkit-fill-available;
+    z-index: 1;
+    background: white;
+    height: 48px;
     border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 

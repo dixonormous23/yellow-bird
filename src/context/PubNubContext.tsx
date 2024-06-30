@@ -60,7 +60,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
     
         const channels = (await chat.getChannels()).channels ?? [];
         setChannels(channels);
-    }
+    };
 
     return (
         <PubNubContext.Provider

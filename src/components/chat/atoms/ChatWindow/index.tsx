@@ -1,37 +1,47 @@
-import {  useCallback, useEffect, useState } from "react";
-import { ChatRoomContainer } from "./styles";
+import { useCallback, useEffect, useState } from "react";
+import { ChatRoomContainer, LastMessageAnchor } from "./styles";
 import { usePubNubContext } from "@/context/PubNubContext";
 import { Message } from "@pubnub/chat";
 
-export const ChatWindow: React.FC= () => {
+export const ChatWindow: React.FC = () => {
     const { activeChannel } = usePubNubContext();
     const [messages, setMessages] = useState<Message[]>([]);
-    const [channelId, setChannelId] = useState<string>();
+
+    const fetchChannelHistory = useCallback(async () => {
+        if (!activeChannel) return;
+
+        const history = (await activeChannel.getHistory()).messages ?? [];
+
+        setMessages(history);
+        
+        const anchor = document.getElementById('chatAnchor');
+
+        if (!anchor) return console.log('no anchor');
+
+        setTimeout(() => {
+            anchor?.scrollIntoView();
+        })
+    }, [activeChannel])
 
     useEffect(() => {
-        const fetchChannelHistory = async () => {
-            if (!activeChannel) return;
-
-            const history = (await activeChannel.getHistory()).messages ?? [];
-
-            setMessages(history);
-        };
         fetchChannelHistory();
-    }, []);
+    }, [fetchChannelHistory]);
 
     useEffect(() => {
         if (!activeChannel) return;
-
-        activeChannel.connect((message) => setMessages((prev) => [...prev, message]));
+        activeChannel.connect((message) => {
+            setMessages((prev) => [...prev, message])
+        });
     }, [activeChannel]);
 
     return (
         <ChatRoomContainer>
-            {messages?.map((item: Message) => (
-                <div key={item.timetoken}>
-                    <p>{item.content.text}</p>
+            {messages?.map((item: Message, i: number) => (
+                <div key={`${item.timetoken}-${i}`}>
+                    <p dangerouslySetInnerHTML={{ __html: item.content.text }} />
                 </div>
             ))}
+            <LastMessageAnchor id="chatAnchor" />
         </ChatRoomContainer>
     )
 }

@@ -9,9 +9,12 @@ export const ChatInputContainer = styled.div`
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
-    padding-left: 8px;
-    padding-right: 8px;
-    height: 56px;
+    padding: 1rem 0.5rem;
+    position: absolute;
+    bottom: 0;
+    width: -webkit-fill-available;
+    z-index: 1;
+    background: white;
     flex-shrink: 0;
     border-top: 1px solid ${({ theme }) => theme.colors.border};
 `;
