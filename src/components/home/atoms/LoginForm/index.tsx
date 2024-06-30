@@ -51,7 +51,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => 
         setSubmitting(true);
         try {
             await signInWithEmailAndPassword(auth, state.email, state.password);
-            router.push('/chat');
+            router.replace('/chat');
         } catch (error) {
             setError(formattedFirebaseError(error));
             setSubmitting(false);

@@ -1,13 +1,14 @@
+import { breakpoint } from "@/styles/utils";
 import styled, { keyframes, css } from "styled-components";
 
 const fadeInAnimation = keyframes`
     0% {
-        left: 200px;
+        top: 100px;
         opacity: 0;
     }
 
     100% {
-        left: 0px;
+        top: 0px;
         opacity: 1;
     }
 `;
@@ -44,6 +45,11 @@ export const FormContainer = styled.div`
     margin-bottom: 5rem;
     transition: 0.2s;
     animation: 1s ease ${fadeInAnimation} forwards;
+
+    ${breakpoint('mobile')} {
+        width: auto;
+    };
+
 `;
 
 export const StyledForm = styled.form<{ $gutter?: boolean; }>`

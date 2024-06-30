@@ -1,3 +1,4 @@
+import { breakpoint } from "@/styles/utils";
 import Link from "next/link";
 import styled, { keyframes, css } from "styled-components";
 
@@ -23,16 +24,9 @@ export const HeroTitle = styled.h1`
     margin: 1rem 0;
     font-family: ${({ theme }) => theme.fontFamily.secondary};
 
-    /* &::after {
-        content: "";
-        display: flex;
-        width: calc(100% - 2rem);
-        height: 5px;
-        border-radius: 10px;
-        margin-top: 1rem;
-        background-color: ${({ theme }) => theme.colors.primary};;
-        animation: 0.5s ease ${borderAnimation};
-    } */
+    ${breakpoint('mobile')} {
+        text-align: center;
+    }
 `;
 
 export const HeroSubTitle = styled.p`

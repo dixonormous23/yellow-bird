@@ -52,7 +52,7 @@ export const RegisterForm: React.FC = () => {
             const { user } = await createUserWithEmailAndPassword(auth, state.email, state.password)
 
             await db.set(`/users/${user.uid}`, { username: state.username, avatar: state.avatar ?? DEFAULT_AVATAR });
-            router.push('/chat');
+            router.replace('/chat');
         } catch (error) {
             setError(formattedFirebaseError(error));
             setSubmitting(false);

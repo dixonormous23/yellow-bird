@@ -1,5 +1,8 @@
 export type MainTheme = typeof theme;
 
+export const MOBILE_BREAKPOINT = 480;
+export const TABLET_BREAKPOINT = 850;
+
 export const theme = {
     colors: {
         primary: "#ffcc04",
@@ -11,8 +14,8 @@ export const theme = {
         secondary: "Barlow"
     },
     breakpoints: {
-        mobile: "480px",
-        tablet: "850px",
+        mobile: `${MOBILE_BREAKPOINT}px`,
+        tablet: `${TABLET_BREAKPOINT}px`,
     },
     widths: {
         maxContent: "1350px"

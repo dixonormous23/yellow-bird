@@ -3,6 +3,7 @@ import { ChatRoomContainer, LastMessageAnchor } from "./styles";
 import { usePubNubContext } from "@/context/PubNubContext";
 import { Message } from "@pubnub/chat";
 import { ChatMessage } from "../MessageItem";
+import { ChatAnchor } from "./ChatAnchor";
 
 export const ChatWindow: React.FC = () => {
     const { activeChannel } = usePubNubContext();
@@ -14,15 +15,8 @@ export const ChatWindow: React.FC = () => {
         const history = (await activeChannel.getHistory()).messages ?? [];
 
         setMessages(history);
-        
-        const anchor = document.getElementById('chatAnchor');
-
-        if (!anchor) return console.log('no anchor');
-
-        setTimeout(() => {
-            anchor?.scrollIntoView();
-        })
-    }, [activeChannel])
+    
+    }, [activeChannel]);
 
     useEffect(() => {
         fetchChannelHistory();
@@ -35,6 +29,7 @@ export const ChatWindow: React.FC = () => {
         });
     }, [activeChannel]);
 
+
     return (
         <ChatRoomContainer>
             {messages?.map((message: Message, i: number, arr: Message[]) => {
@@ -44,7 +39,7 @@ export const ChatWindow: React.FC = () => {
                     <ChatMessage key={`${message.timetoken}-${i}`} message={message} stack={stack} />
                 )
             })}
-            <LastMessageAnchor id="chatAnchor" />
+            <ChatAnchor messages={messages} />
         </ChatRoomContainer>
     )
 }

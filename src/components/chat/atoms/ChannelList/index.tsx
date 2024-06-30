@@ -4,10 +4,14 @@ import { CreateChannelModal, ChannelActions } from "./molecules";
 import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, UserActionsContainer, Username } from "./styles";
 import { useCallback, useEffect, useState } from "react";
 import { Channel } from "@pubnub/chat";
+import { useWindowWidth } from "@/hooks/useWindowWidth";
 
 export const ChannelList: React.FC = () => {
+    const { isMobile } = useWindowWidth();
     const { fetching, channels, activeUser, setActiveChannel } = usePubNubContext();
+
     const [userChannels, setUserChannels] = useState<Channel[]>([]);
+    const [condense, setCondense] = useState<boolean>(false);
 
     const fetchUserChannels = useCallback(async () => {
         if (!activeUser) return;
@@ -27,8 +31,16 @@ export const ChannelList: React.FC = () => {
         fetchUserChannels();
     }, [channels, fetchUserChannels]);
 
+    const onChannelItemClick = (channel: Channel) => {
+        setActiveChannel(channel);
+
+        if (isMobile) {
+            setCondense(true);
+        }
+    }
+
     return (
-        <ChannelListContainer>
+        <ChannelListContainer $condense={condense}>
             <UserActionsContainer>
                 <Avatar src={activeUser?.custom?.avatar} size={48} />
                 <Username>{activeUser?.name}</Username>
@@ -38,7 +50,7 @@ export const ChannelList: React.FC = () => {
                     <small>Loading chats..</small>
                 ) : userChannels?.length ? (
                     userChannels.map((channel) => (
-                        <ChannelItemWrapper key={channel.id} onClick={() => setActiveChannel(channel)}>
+                        <ChannelItemWrapper key={channel.id} onClick={() => onChannelItemClick(channel)}>
                             <span>{channel.name ?? channel.id}</span>
                             <ChannelActions channel={channel} />
                         </ChannelItemWrapper>

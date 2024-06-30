@@ -1,3 +1,4 @@
+import { breakpoint } from "@/styles/utils";
 import styled from "styled-components";
 
 export const MessageItemWrapper = styled.div`
@@ -14,6 +15,10 @@ export const MessageItemWrapper = styled.div`
 
 export const MessageAvatarWrapper = styled.div<{ $stack: boolean }>`
     margin-right: ${(props) => props.$stack ? 4 : 1}rem;
+
+    ${breakpoint('mobile')} {
+        margin-right: 1rem;
+    }
 `;
 
 export const MessageBodyWrapper = styled.div`

@@ -14,6 +14,7 @@ export const ChatComponentInnerContainer = styled.div`
     flex-direction: column;
     height: 80vh;
     margin-inline: 2rem;
+    margin-bottom: 5rem;
     max-width: ${({ theme }) => theme.widths.maxContent};
 `;
 
