@@ -27,42 +27,14 @@ export const ActiveUsersWrapper = styled.div`
     }
 `;
 
-export const CreateRoomForm = styled.form`
+export const ChannelOptionsWrapper = styled.div`
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-`;
-
-
-export const CreateChatButton = styled.button`
-    ${sharedButtonStyles};
-    padding: 0.2rem 1rem;
-
-    &:hover:not([disabled]) {
-        background-color: white;
-    }
-
-    label {
-        cursor: pointer;
-        margin-right: 0.5rem;
-    }
-`;
-
-
-export const CreateChatSubmitButton = styled.button`
-    ${sharedButtonStyles};
-    padding: 0.3rem 3rem;
-    max-width: fit-content;
-    align-self: center;
-`;
-
-
-export const CreateChatInnerContainer = styled.div`
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    min-width: 300px;
-    margin: 2rem 1rem;
+    gap: 1rem;
+`;
+
+export const CopyChannelCodeButton = styled.button`
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 `;

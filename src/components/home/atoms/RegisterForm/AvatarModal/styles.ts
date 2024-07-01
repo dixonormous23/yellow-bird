@@ -23,7 +23,7 @@ export const AvatarUploadPlaceholder = styled.div`
     justify-content: center;
     cursor: pointer;
     transition: 0.2s;
-    background-color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.primary};
 
     &:hover {
         opacity: 0.5;
@@ -74,12 +74,12 @@ export const SaveAvatarButton = styled.button`
     transition: 0.2s;
     color: white;
     cursor: pointer;
-    border: 1px solid ${({ theme }) => theme.colors.secondary};
-    background-color: ${({ theme }) => theme.colors.secondary};
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.primary};
 
     &:hover:not([disabled]) {
         background-color: white;
-        color: ${({ theme }) => theme.colors.secondary};
+        color: ${({ theme }) => theme.colors.primary};
     }
 
     &:disabled {

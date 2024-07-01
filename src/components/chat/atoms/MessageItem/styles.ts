@@ -11,7 +11,7 @@ export const MessageItemWrapper = styled.div`
     cursor: pointer;
 
     &:hover {
-        background-color: ${({ theme }) => theme.colors.secondaryLight};
+        background-color: ${({ theme }) => theme.colors.primaryLight};
 
         aside {
             opacity: 1;
@@ -25,7 +25,7 @@ export const MessageItemActionsContainer = styled.aside`
     right: 0;
     top: 0;
     padding: 0.2rem;
-    background-color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const MessageAvatarWrapper = styled.div<{ $stack: boolean }>`

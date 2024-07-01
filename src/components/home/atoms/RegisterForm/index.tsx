@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { formattedFirebaseError } from '@/utils/formattedFirebaseError';
 import { DEFAULT_AVATAR } from '@/constants';
 import { auth, db } from '@/firebase';
-import { InputField, StyledForm, FormSubmitContainer, SubmitButton, SubmissionError } from '@/components/common';
+import { InputField, StyledForm, FormSubmitContainer, SubmissionError, Button } from '@/components/common';
 import { AvatarModal } from './AvatarModal';
 import { AvatarContainer, FormSubtitle, FormTitle, UploadAvatarButton, UserAvatar } from './styles';
 
@@ -123,7 +123,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleBackToLogin })
                     onChange={onChange}
                 />
                 <FormSubmitContainer>
-                    <SubmitButton type="submit" disabled={submitDisabled}>Submit</SubmitButton>
+                    <Button label="Submit" type="submit" disabled={submitDisabled} />
                 </FormSubmitContainer>
                 {error && <SubmissionError>{error}</SubmissionError>}
             </StyledForm>

@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import styled from "styled-components";
 
 const BackIcon = dynamic(() => import('./icons/BackIcon'));
+const CopyIcon = dynamic(() => import('./icons/CopyIcon'));
 const PlusIcon = dynamic(() => import('./icons/PlusIcon'));
 const MoreIcon = dynamic(() => import('./icons/MoreIcon'));
 const EmojiIcon = dynamic(() => import('./icons/EmojiIcon'));
@@ -23,7 +24,8 @@ export type IconType =
     'sendMessage' |
     'back' |
     'emoji' |
-    'uploadFile';
+    'uploadFile' |
+    'copy';
 
 export interface StyledIconProps {
     size?: number;
@@ -38,7 +40,7 @@ const IconWrapper = styled.div<StyledIconProps>`
     display: flex;
 
     svg {
-        fill: ${(props) => props.fill ?? props.theme.colors.secondary};
+        fill: ${(props) => props.fill ?? props.theme.colors.primary};
         width: ${(props) => props.size ?? 25}px;
         height: ${(props) => props.size ?? 25}px; 
     }
@@ -67,6 +69,8 @@ export const Icon: React.FC<IconProps> = ({ variant, ...rest }) => {
                 return <EmojiIcon />;
             case 'uploadFile':
                 return <UploadFileIcon />;
+            case 'copy':
+                return <CopyIcon />;
             default:
                 return null;
         }

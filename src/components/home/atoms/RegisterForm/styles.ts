@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const FormTitle = styled.h1`
     font-size: 2.5rem;
     margin: 0;
-    font-family: ${({ theme }) => theme.fontFamily.secondary};
+    font-family: ${({ theme }) => theme.fontFamily.primary};
 `;
 
 export const FormSubtitle = styled.p`
@@ -29,11 +29,11 @@ export const UploadAvatarButton = styled.button`
     cursor: pointer;
     transition: 0.2s;
     background-color: transparent;
-    border: 1px solid ${({ theme }) => theme.colors.secondary};
+    border: 1px solid ${({ theme }) => theme.colors.primary};
 
     &:hover {
         color: white;
-        background-color: ${({ theme }) => theme.colors.secondary};
+        background-color: ${({ theme }) => theme.colors.primary};
     }
 `;
 

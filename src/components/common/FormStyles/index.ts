@@ -76,12 +76,12 @@ export const formButtonStyles = css`
     transition: 0.2s;
     cursor: pointer;
     text-align: center;
-    border: 1px solid ${({ theme }) => theme.colors.secondary};
-    background-color: ${({ theme }) => theme.colors.secondary};
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.primary};
 
     &:hover:not([disabled]) {
         background-color: white;
-        color: ${({ theme }) => theme.colors.secondary};
+        color: ${({ theme }) => theme.colors.primary};
     }
 
     &:disabled {
@@ -90,12 +90,7 @@ export const formButtonStyles = css`
     }
 `;
 
-export const SubmitButton = styled.button`
-    ${formButtonStyles};
-    min-width: 220px;
-`;
-
 export const SubmissionError = styled.strong`
-    color: red;
     text-align: center;
+    color: ${({ theme }) => theme.colors.error};
 `;

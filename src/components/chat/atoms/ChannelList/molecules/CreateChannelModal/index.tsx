@@ -2,12 +2,15 @@ import { useMemo, useState } from "react";
 
 import { useAuthContext } from "@/context/AuthContext";
 import { usePubNubContext } from "@/context/PubNubContext";
-import { Icon, InputField, Modal, SubmissionError } from "@/components/common";
-import { CreateChatInnerContainer, CreateChatSubmitButton, CreateRoomButton, CreateRoomForm } from "./styles";
+import { Icon } from "@/components/common";
+import { CreateJoinChannelModal } from "../../../CreateJoinChatModal";
+import { ChannelItemWrapper } from "../../styles";
+import { CHANNEL_BOT_DATA } from "@/constants";
+import moment from "moment";
 
 export const CreateChannelModal: React.FC = () => {
     const { user } = useAuthContext();
-    const { chat, channels } = usePubNubContext();
+    const { chat, channels, refetchChannels } = usePubNubContext();
 
     const [open, setOpen] = useState<boolean>(false);
     const [error, setError] = useState<string>();
@@ -42,14 +45,22 @@ export const CreateChannelModal: React.FC = () => {
         };
 
         try {
-            await chat?.createGroupConversation({
+            const { channel } = await chat?.createGroupConversation({
                 users: [host],
                 channelData: {
                     name: roomName
                 }
             });
 
-            // refetchChannels();
+            await channel.sendText(`${host.name} created #${roomName}`, {
+                storeInHistory: true,
+                meta: {
+                    ...CHANNEL_BOT_DATA,
+                    timestamp: moment().valueOf()
+                }
+            });
+    
+            refetchChannels();
             setSubmitting(false);
             toggleOpen();
 
@@ -63,24 +74,22 @@ export const CreateChannelModal: React.FC = () => {
 
     return (
         <>
-            <CreateRoomButton role="button" onClick={toggleOpen}>
+            <ChannelItemWrapper role="button" onClick={toggleOpen}>
                 <Icon variant="plus" size={12} />
                 <label>Create chat</label>
-            </CreateRoomButton>
-            <Modal title="Create new chat" open={open} handleClose={toggleOpen}>
-                <CreateChatInnerContainer>
-                    <CreateRoomForm onSubmit={onCreateRoom}>
-                        <InputField
-                            label="Enter room name"
-                            placeholder="#general"
-                            onChange={onChange}
-                        />
-                        {error && <SubmissionError>{error}</SubmissionError>}
-                        <CreateChatSubmitButton type="submit" disabled={createDisabled}>Create</CreateChatSubmitButton>
-                    </CreateRoomForm>
-                </CreateChatInnerContainer>
-
-            </Modal>
+            </ChannelItemWrapper>
+            <CreateJoinChannelModal
+                open={open}
+                modalTitle="Create new channel"
+                inputLabel="Enter channel name"
+                inputPlaceholder="#general"
+                buttonText="Create"
+                error={error}
+                disabled={createDisabled}
+                onChange={onChange}
+                toggleOpen={toggleOpen}
+                onSubmit={onCreateRoom}
+            />
         </>
     )
 }

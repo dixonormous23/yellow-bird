@@ -28,13 +28,14 @@ export const ChatInput: React.FC = () => {
             meta: {
                 avatar: user?.avatar,
                 username: user?.username,
+                userId: user?.uid,
                 timestamp: moment().valueOf(),
             }
         });
 
         message.innerText = '';
 
-    }, [activeChannel, user?.avatar, user?.username])
+    }, [activeChannel, user])
 
     const listenForSubmit = useCallback((e: KeyboardEvent) => {
         if (e.code === "Enter" && !e.shiftKey && inputRef.current) {
@@ -77,6 +78,15 @@ export const ChatInput: React.FC = () => {
         <ChatInputContainer>
             <TypingIndicator />
             <InputInnerContainer $channelName={activeChannel?.name ?? "channel"}>
+                <InputActionButton onClick={() => setEmojisOpen(!emojisOpen)}>
+                    <Icon variant="emoji" size={20} />
+                    <EmojiPickerWrapper $open={emojisOpen} ref={emojiRef}>
+                        <EmojiPicker
+                            lazyLoadEmojis
+                            onEmojiClick={({ emoji }) => handleAppendEmoji(emoji)}
+                        />
+                    </EmojiPickerWrapper>
+                </InputActionButton>
                 <StyledChatInput
                     contentEditable
                     role="textbox"
@@ -86,22 +96,9 @@ export const ChatInput: React.FC = () => {
                         if (e.code === 'Enter' && !e.shiftKey) e.preventDefault();
                     }}
                 />
-                <InputElementsWrapper>
-                    <InputActionsContainer>
-                        <InputActionButton onClick={() => setEmojisOpen(!emojisOpen)}>
-                            <Icon variant="emoji" size={20} />
-                            <EmojiPickerWrapper $open={emojisOpen} ref={emojiRef}>
-                                <EmojiPicker
-                                    lazyLoadEmojis
-                                    onEmojiClick={({ emoji }) => handleAppendEmoji(emoji)}
-                                />
-                            </EmojiPickerWrapper>
-                        </InputActionButton>
-                    </InputActionsContainer>
-                    <SubmitButton onClick={handleSubmitMessage}>
-                        <Icon variant="sendMessage" size={20} />
-                    </SubmitButton>
-                </InputElementsWrapper>
+                <SubmitButton onClick={handleSubmitMessage}>
+                    <Icon variant="sendMessage" size={20} />
+                </SubmitButton>
             </InputInnerContainer>
         </ChatInputContainer>
     );

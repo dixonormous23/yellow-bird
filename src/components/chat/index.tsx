@@ -14,7 +14,6 @@ export const ChatPageComponent = () => {
     return (
         <ChatComponentContainer>
             <ChatComponentInnerContainer>
-                <h1>Chat</h1>
                 <ChatRoomStack>
                     <ChannelList />
                     <CurrentChatWindow id="chat-window">
@@ -25,7 +24,7 @@ export const ChatPageComponent = () => {
                         {activeChannel && <ChatInput />}
                     </CurrentChatWindow>
                 </ChatRoomStack>
-
+                
             </ChatComponentInnerContainer>
         </ChatComponentContainer>
     );

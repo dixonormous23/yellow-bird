@@ -15,7 +15,6 @@ export const ChatInputContainer = styled.div`
     position: absolute;
     bottom: 0;
     width: -webkit-fill-available;
-    z-index: 1;
     background: white;
     flex-shrink: 0;
     border-top: 1px solid ${({ theme }) => theme.colors.border};
@@ -24,8 +23,8 @@ export const ChatInputContainer = styled.div`
 export const InputInnerContainer = styled.div<{ $channelName: string }>`
     display: flex;
     flex-grow: 1;
+    align-items: center;
     width: 100%;
-    flex-direction: column;
 
     span[contenteditable]:empty:focus::before,
     span[contenteditable]:empty::before {
@@ -56,6 +55,7 @@ export const StyledChatInput = styled.span<{ $currentValue?: string; }>`
     border: none;
     outline: none;
     resize: none;
+    cursor: pointer;
     background: rgba(0, 0, 0, 0.05);
     margin-inline: 1rem;
     border-radius: 10px;

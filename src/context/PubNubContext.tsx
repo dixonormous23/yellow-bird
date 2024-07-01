@@ -64,7 +64,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             }));
 
             const channels = (await chat.getChannels()).channels ?? [];
-
+            
             setChannels(channels);
             setActiveUser(activeUser);
             setFetching(false);
@@ -73,7 +73,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
         initializeChat();
     }, [user]);
 
-    const setNewChannel = async (channel: Channel): Promise<void> => {
+    const setNewChannel = useCallback(async (channel: Channel): Promise<void> => {
         if (!chat || !channel) return;
 
         const memberData = (await channel.getMembers()).members ?? [];
@@ -85,7 +85,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
 
         setActiveChannel(channel);
         setActiveChannelMembers(members);
-    }
+    }, [chat]);
 
     return (
         <PubNubContext.Provider

@@ -12,7 +12,7 @@ export const HeroTitle = styled.h1`
     flex-direction: column;
     align-items: center;
     margin: 1rem 0;
-    font-family: ${({ theme }) => theme.fontFamily.secondary};
+    font-family: ${({ theme }) => theme.fontFamily.primary};
 
     ${breakpoint('mobile')} {
         text-align: center;
@@ -25,19 +25,11 @@ export const HeroSubTitle = styled.p`
     font-style: italic;
     font-weight: 500;
     opacity: 0.8;
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const RegisterAccountWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`;
-
-export const GetStartedButton = styled.button`
-    ${formButtonStyles};
-    min-width: 150px;
-    background-color: ${({ theme }) => theme.colors.primary};
-    border: 1px solid ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.secondary};
 `;

@@ -1,13 +1,13 @@
-export { InputField } from './InputField';
 export { Icon } from './Icon';
-export { Avatar } from './Avatar';
 export { Modal } from './Modal';
+export { Avatar } from './Avatar';
+export { Button } from './Button';
+export { InputField } from './InputField';
 export {
     FormPageContainer,
     FormContainer,
     StyledForm,
     FormSubmitContainer,
-    SubmitButton,
     SubmissionError,
     formButtonStyles
 } from './FormStyles';

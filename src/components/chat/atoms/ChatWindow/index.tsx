@@ -32,7 +32,7 @@ export const ChatWindow: React.FC = () => {
         <ChatRoomContainer>
             {messages?.map((message: Message, i: number, arr: Message[]) => {
                 // Get previous message and compare userIds to stack message block
-                console.log({...message});
+
                 const stack = arr[i - 1]?.userId === message.userId;
                 return <ChatMessage key={`${message.timetoken}-${i}`} message={message} stack={stack} />;
             })}
