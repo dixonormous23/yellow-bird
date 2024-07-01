@@ -10,8 +10,8 @@ export const FormSubtitle = styled.p`
     margin-top: 0;
     font-size: 0.9rem;
 
-    a {
-        color: ${({ theme }) => theme.colors.secondary}
+    span {
+        text-decoration: underline;
     }
 `;
 

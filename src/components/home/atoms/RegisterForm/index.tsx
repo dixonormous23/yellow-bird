@@ -16,9 +16,13 @@ interface RegisterFormState {
     password: string;
     confirmPassword: string;
     avatar: string | null;
+};
+
+interface RegisterFormProps {
+    handleBackToLogin: () => void;
 }
 
-export const RegisterForm: React.FC = () => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({ handleBackToLogin }) => {
     const router = useRouter();
     const [uploadAvatarOpen, setUploadAvatarOpen] = useState<boolean>(false);
     const [error, setError] = useState<string>();
@@ -81,7 +85,7 @@ export const RegisterForm: React.FC = () => {
     return (
         <>
             <FormTitle>Create Account</FormTitle>
-            <FormSubtitle>Already have an account? <Link href="/">Back to Login</Link></FormSubtitle>
+            <FormSubtitle>Already have an account? <span onClick={handleBackToLogin}>Back to Login</span></FormSubtitle>
             <AvatarContainer>
                 <UserAvatar src={state?.avatar ?? DEFAULT_AVATAR} alt="user_avatar" />
                 <UploadAvatarButton onClick={() => setUploadAvatarOpen(true)}>Upload Avatar</UploadAvatarButton>

@@ -1,8 +1,10 @@
-import { useState, useEffect, createContext, useContext, useCallback } from "react";
+import { useState, useEffect, createContext, useContext, } from "react";
+import { useRouter } from "next/router";
+import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 
 import { auth, db, onAuthStateChanged } from "@/firebase";
 import { ProviderProps, UserInterface } from "../../@types";
-import { useRouter } from "next/router";
+import { USER_COOKIE_KEY } from "@/constants";
 
 export interface AuthContextInterface {
     user: UserInterface | null;
@@ -22,15 +24,17 @@ export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
             if (!user) return setInitialized(true);
         
             const userData = await db.get<UserInterface>(`/users/${user.uid}`);
-            setUser((prev) => ({
-                ...user,
-                ...userData
-            }));
+            const token = await user.getIdToken();
+
+            setUser({ ...user, ...userData });
+            setCookie(USER_COOKIE_KEY, token);
+
             setInitialized(true);
         })
     }, []);
 
     const signOut = () => {
+        deleteCookie(USER_COOKIE_KEY);
         auth.signOut();
         router.replace('/');
     };
