@@ -12,7 +12,7 @@ interface ModalProps extends ProviderProps {
     open: boolean;
     title: string;
     handleClose: () => void;
-}
+};
 
 export const Modal: React.FC<ModalProps> = ({ open, title = "Modal", handleClose, children }) => {
     if (!open) return null;

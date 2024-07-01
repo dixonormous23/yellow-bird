@@ -4,20 +4,8 @@ import { useRouter } from 'next/router';
 import { auth, signInWithEmailAndPassword } from '@/firebase';
 import { formattedFirebaseError } from '@/utils/formattedFirebaseError';
 import { DividerText } from '@/components/common/DividerText';
-import {
-    InputField,
-    StyledForm,
-    FormSubmitContainer,
-    SubmitButton,
-    SubmissionError
-} from '@/components/common';
-import {
-    HeroTitle,
-    HeroSubTitle,
-    GetStartedButton,
-    LoginFormWrapper,
-    RegisterAccountWrapper,
-} from "./styles";
+import { InputField, StyledForm, FormSubmitContainer, SubmissionError, Button } from '@/components/common';
+import { HeroTitle, LoginFormWrapper, RegisterAccountWrapper } from "./styles";
 
 interface FormState {
     email: string;
@@ -64,7 +52,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => 
         <>
             <LoginFormWrapper>
                 <HeroTitle>Welcome to Canary Chat!</HeroTitle>
-                <HeroSubTitle>Chat with virtually anyone in the world for free!</HeroSubTitle>
                 <StyledForm $gutter onSubmit={onSubmit}>
                     <InputField
                         required
@@ -83,14 +70,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => 
                         onChange={onChange}
                     />
                     <FormSubmitContainer>
-                        <SubmitButton type="submit" disabled={submitDisabled}>Sign in</SubmitButton>
+                        <Button label="Sign in" type="submit" disabled={submitDisabled} sx={{ minWidth: '220px' }} />
                     </FormSubmitContainer>
                     {error && <SubmissionError>{error}</SubmissionError>}
                 </StyledForm>
             </LoginFormWrapper>
             <DividerText text="or" gutters />
             <RegisterAccountWrapper>
-                <GetStartedButton onClick={handleCreateAccount}>Create account</GetStartedButton>
+                <Button label="Create account" theme='secondary' onClick={handleCreateAccount} />
             </RegisterAccountWrapper>
         </>
     )

@@ -32,7 +32,7 @@ export const auth = getAuth(app);
 export const database = getDatabase(app);
 export const storage = getStorage();
 
-// Create a class to interface with Firebase, mostly for personal preference and return value typing
+// Created a class to interface with Firebase Realtime Database, mostly for personal preference and return value typing
 class Database {
     async get<T>(path: string): Promise<T> {
         return await new Promise(async (resolve, reject) => {

@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import { formButtonStyles } from "@/components/common";
 import { breakpoint } from "@/styles/utils";
-import { sharedListItemStyles } from "./sharedStyles";
 
 export const ChannelListContainer = styled.div<{ $condense: boolean; }>`
     display: flex;
@@ -38,15 +36,13 @@ export const JoinChannelContainer = styled.div`
     justify-content: center;
 `;
 
-export const JoinChannelButton = styled.div`
-    ${formButtonStyles};
-`;
-
 export const ChannelItemsContainer = styled.nav`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-top: 2rem;
+    padding-top: 2rem;
+    height: -webkit-fill-available;
+    background: ${({ theme }) => theme.colors.surfaceLight};
 
     small {
         text-align: center;
@@ -54,6 +50,26 @@ export const ChannelItemsContainer = styled.nav`
 `;
 
 export const ChannelItemWrapper = styled.div`
-    ${sharedListItemStyles};
-    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.3rem 1rem;
+    transition: 0.2s;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    margin-inline: 0.5rem;
+    border-radius: 10px;
+
+    label {
+        cursor: pointer;
+        margin-left: 0.5rem;
+    }
+
+    &:hover {
+        background-color: rgba(0,0,0,0.05);
+
+        button {
+            opacity: 1;
+        }
+    };
 `;

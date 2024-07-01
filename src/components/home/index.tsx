@@ -16,7 +16,7 @@ export const HomePageComponent = () => {
                 {activeStep === ActiveStep.LOGIN ? (
                     <LoginForm handleCreateAccount={() => setActiveStep(ActiveStep.REGISTER)} />
                 ) : (
-                    <RegisterForm />
+                    <RegisterForm handleBackToLogin={() => setActiveStep(ActiveStep.LOGIN)} />
                 )}
             </FormContainer>
         </FormPageContainer>

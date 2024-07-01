@@ -4,20 +4,16 @@ import { AppLayout } from "@/layout";
 import { useAuthContext } from "@/context/AuthContext";
 import { PubNubContextProvider } from "@/context/PubNubContext";
 import { Loader } from "@/components/common/Loader";
-import { useRouter } from "next/router";
 import { Navbar } from "@/layout/Navbar";
+import { getServerSideAuth } from "@/utils/getServerSideAuth";
+import { RouteAuth } from "../../@types";
 
 const ChatPage: NextPage = () => {
-    const router = useRouter();
     const { initialized, user } = useAuthContext();
 
     if (!initialized) {
+        // Presuming we've passed the getServerSideAuth check we still should wait for user data to be set
         return <Loader />;
-    };
-
-    if (initialized && !user) {
-        router.push('/');
-        return;
     };
 
     return (
@@ -29,5 +25,9 @@ const ChatPage: NextPage = () => {
         </PubNubContextProvider>
     );
 };
+
+export const getServerSideProps = async (ctx: any) => {
+    return await getServerSideAuth(ctx, RouteAuth.LOGGED_IN);
+}
 
 export default ChatPage;

@@ -13,7 +13,6 @@ const fadeInAnimation = keyframes`
     }
 `;
 
-
 export const FormPageContainer = styled.section`
     display: flex;
     flex-direction: column;
@@ -22,11 +21,15 @@ export const FormPageContainer = styled.section`
     position: relative;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-top: 96px;
-    padding-bottom: 96px;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
     min-height: 80vh;
     background-position: center center;
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)) center center / cover no-repeat, url(https://zone-ui.vercel.app/assets/background/overlay_1.jpg);
+
+    ${breakpoint('mobile')} {
+        padding-top: 2rem;
+    }
 `;
 
 export const FormContainer = styled.div`
@@ -76,12 +79,12 @@ export const formButtonStyles = css`
     transition: 0.2s;
     cursor: pointer;
     text-align: center;
-    border: 1px solid ${({ theme }) => theme.colors.secondary};
-    background-color: ${({ theme }) => theme.colors.secondary};
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.primary};
 
     &:hover:not([disabled]) {
         background-color: white;
-        color: ${({ theme }) => theme.colors.secondary};
+        color: ${({ theme }) => theme.colors.primary};
     }
 
     &:disabled {
@@ -90,12 +93,7 @@ export const formButtonStyles = css`
     }
 `;
 
-export const SubmitButton = styled.button`
-    ${formButtonStyles};
-    min-width: 220px;
-`;
-
 export const SubmissionError = styled.strong`
-    color: red;
     text-align: center;
+    color: ${({ theme }) => theme.colors.error};
 `;

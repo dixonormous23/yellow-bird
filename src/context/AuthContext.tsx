@@ -1,8 +1,10 @@
-import { useState, useEffect, createContext, useContext, useCallback } from "react";
+import { useState, useEffect, createContext, useContext, } from "react";
+import { useRouter } from "next/router";
+import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 
 import { auth, db, onAuthStateChanged } from "@/firebase";
 import { ProviderProps, UserInterface } from "../../@types";
-import { useRouter } from "next/router";
+import { USER_COOKIE_KEY } from "@/constants";
 
 export interface AuthContextInterface {
     user: UserInterface | null;
@@ -18,19 +20,24 @@ export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
     const [initialized, setInitialized] = useState<boolean>(false);
 
     useEffect(() => {
+        // This fires when Firebase detects an update in user credentials, e.g logs in or no auth user present
         onAuthStateChanged(auth, async (user) => {
             if (!user) return setInitialized(true);
         
             const userData = await db.get<UserInterface>(`/users/${user.uid}`);
-            setUser((prev) => ({
-                ...user,
-                ...userData
-            }));
+            const token = await user.getIdToken();
+
+            setUser({ ...user, ...userData });
+
+            // Set token for server side auth
+            setCookie(USER_COOKIE_KEY, token);
+
             setInitialized(true);
         })
     }, []);
 
     const signOut = () => {
+        deleteCookie(USER_COOKIE_KEY);
         auth.signOut();
         router.replace('/');
     };

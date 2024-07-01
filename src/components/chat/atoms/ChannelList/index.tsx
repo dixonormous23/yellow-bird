@@ -4,12 +4,12 @@ import { Channel } from "@pubnub/chat";
 import { Avatar } from "@/components/common";
 import { usePubNubContext } from "@/context/PubNubContext";
 import { useWindowWidth } from "@/hooks/useWindowWidth";
-import { CreateChannelModal, ChannelActions } from "./molecules";
+import { CreateChannelModal } from "./molecules";
 import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, UserActionsContainer, Username } from "./styles";
 
 export const ChannelList: React.FC = () => {
     const { isMobile } = useWindowWidth();
-    const { fetching, channels, activeUser, setActiveChannel } = usePubNubContext();
+    const { fetching, channels, activeUser, setNewChannel } = usePubNubContext();
 
     const [userChannels, setUserChannels] = useState<Channel[]>([]);
     const [condense, setCondense] = useState<boolean>(false);
@@ -17,15 +17,10 @@ export const ChannelList: React.FC = () => {
     const fetchUserChannels = useCallback(async () => {
         if (!activeUser) return;
 
-        const memberships = (await activeUser.getMemberships()).memberships;
-
-        const userChannels = await Promise.all(channels.filter((channel) => {
-            return memberships.some(async (member) =>
-                (await channel.getMembers()).members.find((_member) => _member.user.id === member.user.id))
-        }));
+        const userChannels = (await activeUser.getMemberships()).memberships.map(({ channel }) => channel);
 
         setUserChannels(userChannels);
-    }, [activeUser, channels]);
+    }, [activeUser]);
 
 
     useEffect(() => {
@@ -33,8 +28,7 @@ export const ChannelList: React.FC = () => {
     }, [channels, fetchUserChannels]);
 
     const onChannelItemClick = (channel: Channel) => {
-        setActiveChannel(channel);
-
+        setNewChannel(channel);
         setCondense(isMobile);
     };
 
@@ -50,8 +44,7 @@ export const ChannelList: React.FC = () => {
                 ) : userChannels?.length ? (
                     userChannels.map((channel) => (
                         <ChannelItemWrapper key={channel.id} onClick={() => onChannelItemClick(channel)}>
-                            <span>{channel.name ?? channel.id}</span>
-                            <ChannelActions channel={channel} />
+                            <span># {channel.name ?? channel.id}</span>
                         </ChannelItemWrapper>
                     ))
                 ) : null}

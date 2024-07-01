@@ -6,10 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "cypress open"
   },
   "dependencies": {
     "@pubnub/chat": "^0.7.3",
+    "cookies-next": "^4.2.1",
+    "emoji-picker-react": "^4.11.0",
     "firebase": "^10.12.2",
     "moment": "^2.30.1",
     "next": "14.2.4",
@@ -21,6 +24,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.12.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "typescript": "^5"

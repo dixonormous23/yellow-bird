@@ -1,9 +1,12 @@
 import { useMemo, useState } from "react";
+import moment from "moment";
 
 import { useAuthContext } from "@/context/AuthContext";
 import { usePubNubContext } from "@/context/PubNubContext";
-import { Icon, InputField, Modal, SubmissionError } from "@/components/common";
-import { CreateChatButton, CreateChatInnerContainer, CreateChatSubmitButton, CreateRoomForm } from "./styles";
+import { Icon  } from "@/components/common";
+import { CreateJoinChannelModal } from "../../../CreateJoinChatModal";
+import { JoinChannelButton } from "./styles";
+import { CHANNEL_BOT_DATA } from "@/constants";
 
 export const JoinChannelModal: React.FC = () => {
     const { user } = useAuthContext();
@@ -22,7 +25,7 @@ export const JoinChannelModal: React.FC = () => {
         setRoomName(e.target.value);
     };
 
-    const onCreateRoom = async (e: React.FormEvent<HTMLFormElement>) => {
+    const onJoinRoom = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!roomId || !chat || !user?.uid || submitting) return;
 
@@ -42,7 +45,15 @@ export const JoinChannelModal: React.FC = () => {
                 return setError("Invalid room id");
             }
 
-            await channel.invite(host)
+            await channel.invite(host);
+            await channel.sendText(`${host.name} has joined!`, {
+                storeInHistory: true,
+                meta: {
+                    ...CHANNEL_BOT_DATA,
+                    timestamp: moment().valueOf()
+                }
+            });
+
             refetchChannels();
             setSubmitting(false);
             toggleOpen();
@@ -53,28 +64,26 @@ export const JoinChannelModal: React.FC = () => {
         }
     };
 
-    const createDisabled = useMemo(() => !(roomId?.length > 0 && !submitting), [roomId, submitting]);
+    const joinDisabled = useMemo(() => !(roomId?.length > 0 && !submitting), [roomId, submitting]);
 
     return (
         <>
-            <CreateChatButton onClick={toggleOpen}>
+            <JoinChannelButton onClick={toggleOpen}>
                 <label>Join Chat</label>
                 <Icon variant="joinChat" size={12} fill="white" />
-            </CreateChatButton>
-            <Modal title="Join chat" open={open} handleClose={toggleOpen}>
-                <CreateChatInnerContainer>
-                    <CreateRoomForm onSubmit={onCreateRoom}>
-                        <InputField
-                            label="Enter room ID"
-                            placeholder="c6c649cb-747e-497a-9c45-f806b73283fe"
-                            onChange={onChange}
-                        />
-                        {error && <SubmissionError>{error}</SubmissionError>}
-                        <CreateChatSubmitButton type="submit" disabled={createDisabled}>Join</CreateChatSubmitButton>
-                    </CreateRoomForm>
-                </CreateChatInnerContainer>
-
-            </Modal>
+            </JoinChannelButton>
+            <CreateJoinChannelModal
+                open={open}
+                modalTitle="Join channel"
+                inputLabel="Enter channel code"
+                inputPlaceholder="c6c649cb-747e-497a-9c45-f806b73283fe"
+                buttonText="Join"
+                error={error}
+                disabled={joinDisabled}
+                toggleOpen={toggleOpen}
+                onChange={onChange}
+                onSubmit={onJoinRoom}
+            />
         </>
     )
 }

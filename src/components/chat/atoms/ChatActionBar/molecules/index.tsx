@@ -1,0 +1,1 @@
+export { JoinChannelModal } from './JoinChannelModal';

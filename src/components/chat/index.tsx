@@ -8,24 +8,21 @@ import {
     CurrentChatWindow
 } from "./styles";
 
-
 export const ChatPageComponent = () => {
-    const { activeChannel } = usePubNubContext();
+    const { activeChannel, activeChannelMembers } = usePubNubContext();
     return (
         <ChatComponentContainer>
             <ChatComponentInnerContainer>
-                <h1>Chat</h1>
                 <ChatRoomStack>
                     <ChannelList />
                     <CurrentChatWindow id="chat-window">
                         <ChatRoomWrapper>
-                            <ChatActionBar activeChannel={activeChannel} />
+                            <ChatActionBar activeChannel={activeChannel} activeChannelMembers={activeChannelMembers} />
                             {activeChannel ? <ChatWindow /> : <EmptyChat />}
                         </ChatRoomWrapper>
                         {activeChannel && <ChatInput />}
                     </CurrentChatWindow>
                 </ChatRoomStack>
-
             </ChatComponentInnerContainer>
         </ChatComponentContainer>
     );

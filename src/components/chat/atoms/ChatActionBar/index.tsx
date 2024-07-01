@@ -1,33 +1,50 @@
-import { Channel } from "@pubnub/chat";
-import { useEffect, useState } from "react";
-import { JoinChannelModal } from "./JoinChatModal";
-import { ActiveUsersWrapper, ChatActionsWrapper } from "./styles";
+import { useState } from "react";
+import { Channel, User } from "@pubnub/chat";
+import { Icon } from "@/components/common";
+import { JoinChannelModal } from "./molecules";
+import { ActiveUsersWrapper, ChannelOptionsWrapper, ChatActionsWrapper, CopyChannelCodeButton } from "./styles";
 
 interface ChatActionsProps {
     activeChannel: Channel | null;
+    activeChannelMembers: User[];
 }
 
-export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel }) => {
-    const [channelMembers, setChannelMembers] = useState<number>(0);
+export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel, activeChannelMembers }) => {
+    const [copied, setCopied] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (!activeChannel) return;
+    const handleCopyChannelCode = () => {
+        if (!activeChannel?.id || copied) return;
 
-        const fetchChannelMembers = async () => {
-            const members = (await activeChannel.getMembers()).total;
-            setChannelMembers(members ?? 0);
+        if (typeof navigator !== 'undefined') {
+            navigator.clipboard.writeText(activeChannel.id);
+
+            setCopied(true);
+
+            setTimeout(() => setCopied(false), 2000);
         }
+    };
 
-        fetchChannelMembers();
-    }, [activeChannel]);
-    
     return (
         <ChatActionsWrapper>
             <ActiveUsersWrapper>
-                <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
-                <small>{channelMembers} members</small>
+                {activeChannel && (
+                    <>
+                        <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
+                        <small>{activeChannelMembers?.length} members</small>
+                    </>
+                )}
             </ActiveUsersWrapper>
-            {!activeChannel && <JoinChannelModal />}
+            <ChannelOptionsWrapper>
+                {activeChannel && (
+                    <div title="Copy channel id">
+                        <CopyChannelCodeButton onClick={handleCopyChannelCode}>
+                            <label>{copied ? "Copied!" : "Copy Channel ID"}</label>
+                            <Icon variant="copy" size={15} />
+                        </CopyChannelCodeButton>
+                    </div>
+                )}
+                <JoinChannelModal />
+            </ChannelOptionsWrapper>
         </ChatActionsWrapper>
     );
 };
