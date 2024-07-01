@@ -71,6 +71,17 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
         initializeChat();
     }, [user]);
 
+    const getSetActiveChannel = useCallback(async (channel: Channel) => {
+        const memberData = (await channel.getMembers()).members ?? [];
+
+        const members = await Promise.all(memberData.map(async (member) => {
+            const user = await chat?.getUser(member.user.id) ?? {} as User;
+            return { [user.id]: { ...user } };
+        }));
+
+        return members;
+    }, [activeChannel]);
+
     return (
         <PubNubContext.Provider
             value={{

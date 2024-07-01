@@ -24,8 +24,12 @@ export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel }) => 
     return (
         <ChatActionsWrapper>
             <ActiveUsersWrapper>
-                <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
-                <small>{channelMembers} members</small>
+                {activeChannel && (
+                    <>                    
+                        <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
+                        <small>{channelMembers} members</small>
+                    </>
+                )}
             </ActiveUsersWrapper>
             {!activeChannel && <JoinChannelModal />}
         </ChatActionsWrapper>

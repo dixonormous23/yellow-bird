@@ -1,10 +1,10 @@
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { ChatPageComponent } from "@/components/chat";
 import { AppLayout } from "@/layout";
 import { useAuthContext } from "@/context/AuthContext";
 import { PubNubContextProvider } from "@/context/PubNubContext";
 import { Loader } from "@/components/common/Loader";
-import { useRouter } from "next/router";
 import { Navbar } from "@/layout/Navbar";
 
 const ChatPage: NextPage = () => {
@@ -17,7 +17,7 @@ const ChatPage: NextPage = () => {
 
     if (initialized && !user) {
         router.push('/');
-        return;
+        return null;
     };
 
     return (
