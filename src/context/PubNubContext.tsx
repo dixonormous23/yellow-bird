@@ -51,7 +51,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             const activeUser = (await chat.updateUser(user.uid, {
                 name: user?.username ?? "",
                 custom: {
-                    avatar: 'https://yellow-bird.vercel.app/avatars/avatar_03.png' ?? DEFAULT_AVATAR
+                    avatar: user.avatar ?? DEFAULT_AVATAR
                 }
             }));
 
@@ -62,7 +62,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
 
             if (!userChannels?.length) {
                 const welcomeChannel = await chat.getChannel(WELCOME_CHANNEL_ID);
-                welcomeChannel?.invite(activeUser);
+                await welcomeChannel?.invite(activeUser);
             }
 
             setChannels(channels);
