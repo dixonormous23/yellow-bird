@@ -9,7 +9,7 @@ import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, UserAc
 
 export const ChannelList: React.FC = () => {
     const { isMobile } = useWindowWidth();
-    const { fetching, channels, activeUser, setActiveChannel } = usePubNubContext();
+    const { fetching, channels, activeUser, setNewChannel } = usePubNubContext();
 
     const [userChannels, setUserChannels] = useState<Channel[]>([]);
     const [condense, setCondense] = useState<boolean>(false);
@@ -33,8 +33,7 @@ export const ChannelList: React.FC = () => {
     }, [channels, fetchUserChannels]);
 
     const onChannelItemClick = (channel: Channel) => {
-        setActiveChannel(channel);
-
+        setNewChannel(channel);
         setCondense(isMobile);
     };
 

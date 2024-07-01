@@ -5,10 +5,12 @@ import styled from "styled-components";
 const BackIcon = dynamic(() => import('./icons/BackIcon'));
 const PlusIcon = dynamic(() => import('./icons/PlusIcon'));
 const MoreIcon = dynamic(() => import('./icons/MoreIcon'));
+const EmojiIcon = dynamic(() => import('./icons/EmojiIcon'));
 const CloseIcon = dynamic(() => import('./icons/CloseIcon'));
 const UploadIcon = dynamic(() => import('./icons/UploadIcon'));
 const JoinChatIcon = dynamic(() => import('./icons/JoinChatIcon'));
 const EmptyChatIcon = dynamic(() => import('./icons/EmptyChatIcon'));
+const UploadFileIcon = dynamic(() => import('./icons/UploadFileIcon'));
 const SendMessageIcon = dynamic(() => import('./icons/SendMessageIcon'));
 
 export type IconType =
@@ -19,7 +21,9 @@ export type IconType =
     'joinChat' |
     'more' |
     'sendMessage' |
-    'back';
+    'back' |
+    'emoji' |
+    'uploadFile';
 
 export interface StyledIconProps {
     size?: number;
@@ -59,6 +63,10 @@ export const Icon: React.FC<IconProps> = ({ variant, ...rest }) => {
                 return <SendMessageIcon />;
             case 'back':
                 return <BackIcon />;
+            case 'emoji':
+                return <EmojiIcon />;
+            case 'uploadFile':
+                return <UploadFileIcon />;
             default:
                 return null;
         }

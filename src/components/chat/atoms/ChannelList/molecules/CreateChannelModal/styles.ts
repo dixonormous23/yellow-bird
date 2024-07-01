@@ -40,6 +40,7 @@ export const CreateRoomButton = styled.div`
     ${sharedListItemStyles};
 
     label {
+        cursor: pointer;
         margin-left: 0.5rem;
     }
 `;

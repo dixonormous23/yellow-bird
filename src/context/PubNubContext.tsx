@@ -9,8 +9,9 @@ interface PubNubContextInterface {
     fetching: boolean;
     activeUser?: User;
     activeChannel: Channel | null;
-    setActiveChannel: React.Dispatch<React.SetStateAction<Channel | null>>;
+    activeChannelMembers: User[];
     refetchChannels: () => void;
+    setNewChannel: (channel: Channel) => Promise<void>;
 }
 
 interface PubNupProviderProps extends ProviderProps {
@@ -24,6 +25,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
     const [channels, setChannels] = useState<Channel[]>([]);
     const [activeUser, setActiveUser] = useState<User>();
     const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
+    const [activeChannelMembers, setActiveChannelMembers] = useState<User[]>([]);
     const [fetching, setFetching] = useState<boolean>(true);
 
     // @TODO - refactor this to be DRY, possible throw in API call or in separate useEffect
@@ -51,7 +53,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
                 userId: user?.uid,
                 typingTimeout: 1000
             });
-    
+
             setChat(chat);
 
             const activeUser = (await chat.updateUser(user.uid, {
@@ -71,16 +73,19 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
         initializeChat();
     }, [user]);
 
-    const getSetActiveChannel = useCallback(async (channel: Channel) => {
+    const setNewChannel = async (channel: Channel): Promise<void> => {
+        if (!chat || !channel) return;
+
         const memberData = (await channel.getMembers()).members ?? [];
 
         const members = await Promise.all(memberData.map(async (member) => {
-            const user = await chat?.getUser(member.user.id) ?? {} as User;
-            return { [user.id]: { ...user } };
-        }));
+            const user = await chat.getUser(member.user.id) ?? {} as User;
+            return { ...user };
+        })) as User[];
 
-        return members;
-    }, [activeChannel]);
+        setActiveChannel(channel);
+        setActiveChannelMembers(members);
+    }
 
     return (
         <PubNubContext.Provider
@@ -90,8 +95,9 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
                 fetching,
                 activeUser,
                 activeChannel,
-                setActiveChannel,
-                refetchChannels
+                activeChannelMembers,
+                refetchChannels,
+                setNewChannel
             }}
         >
             {children}

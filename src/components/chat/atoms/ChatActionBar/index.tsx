@@ -1,33 +1,22 @@
-import { Channel } from "@pubnub/chat";
-import { useEffect, useState } from "react";
+import { Channel, User } from "@pubnub/chat";
 import { JoinChannelModal } from "./JoinChatModal";
 import { ActiveUsersWrapper, ChatActionsWrapper } from "./styles";
+import { NetworkStatus } from "./molecules/NetworkStatus";
 
 interface ChatActionsProps {
     activeChannel: Channel | null;
+    activeChannelMembers: User[];
 }
 
-export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel }) => {
-    const [channelMembers, setChannelMembers] = useState<number>(0);
-
-    useEffect(() => {
-        if (!activeChannel) return;
-
-        const fetchChannelMembers = async () => {
-            const members = (await activeChannel.getMembers()).total;
-            setChannelMembers(members ?? 0);
-        }
-
-        fetchChannelMembers();
-    }, [activeChannel]);
-    
+export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel, activeChannelMembers }) => {
     return (
         <ChatActionsWrapper>
+            <NetworkStatus />
             <ActiveUsersWrapper>
                 {activeChannel && (
                     <>                    
                         <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
-                        <small>{channelMembers} members</small>
+                        <small>{activeChannelMembers?.length} members</small>
                     </>
                 )}
             </ActiveUsersWrapper>
