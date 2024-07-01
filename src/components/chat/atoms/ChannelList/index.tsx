@@ -7,12 +7,16 @@ import { useWindowWidth } from "@/hooks/useWindowWidth";
 import { CreateChannelModal } from "./molecules";
 import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, UserActionsContainer, Username } from "./styles";
 
-export const ChannelList: React.FC = () => {
+interface ChannelListProps {
+    condensed: boolean;
+    setCondensed: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const ChannelList: React.FC<ChannelListProps> = ({ condensed, setCondensed }) => {
     const { isMobile } = useWindowWidth();
     const { fetching, channels, activeUser, setNewChannel } = usePubNubContext();
 
     const [userChannels, setUserChannels] = useState<Channel[]>([]);
-    const [condense, setCondense] = useState<boolean>(false);
 
     const fetchUserChannels = useCallback(async () => {
         if (!activeUser) return;
@@ -29,11 +33,11 @@ export const ChannelList: React.FC = () => {
 
     const onChannelItemClick = (channel: Channel) => {
         setNewChannel(channel);
-        setCondense(isMobile);
+        setCondensed(isMobile);
     };
 
     return (
-        <ChannelListContainer $condense={condense}>
+        <ChannelListContainer $condense={condensed}>
             <UserActionsContainer>
                 <Avatar src={activeUser?.custom?.avatar} size={48} />
                 <Username>{activeUser?.name}</Username>

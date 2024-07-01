@@ -62,7 +62,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
 
             if (!userChannels?.length) {
                 const welcomeChannel = await chat.getChannel(WELCOME_CHANNEL_ID);
-                welcomeChannel?.invite(activeUser);
+                await welcomeChannel?.invite(activeUser);
             }
 
             setChannels(channels);

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { sharedButtonStyles } from "../ChannelList/sharedStyles";
+import { breakpoint } from "@/styles/utils";
 
 export const ChatActionsWrapper = styled.div`
     position: absolute;
@@ -27,6 +28,29 @@ export const ActiveUsersWrapper = styled.div`
     }
 `;
 
+export const CloseChatButton = styled.button`
+    display: none;
+
+    ${breakpoint('mobile')} {
+        display: flex;
+        margin-right: 1rem;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+`;
+
+export const ActiveUsersActionsWrapper = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+export const ActiveUsersInnerWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+`;
+
 export const ChannelOptionsWrapper = styled.div`
     display: flex;
     align-items: center;
@@ -46,5 +70,11 @@ export const CopyChannelCodeButton = styled.button`
     label {
         cursor: pointer;
         margin-right: 0.5rem;
+    }
+
+    ${breakpoint('mobile')} {
+        label {
+            display: none;
+        }
     }
 `;
