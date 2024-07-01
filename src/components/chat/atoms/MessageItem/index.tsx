@@ -38,10 +38,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, stack }) => {
     const [messageData, setMessageData] = useState<Message>(message);
 
     useEffect(() => {
-        message.streamUpdates((updates) => {
-            console.log(updates);
-            setMessageData(updates)
-        });
+        message.streamUpdates((updates) => setMessageData(updates));
     }, [message]);
 
     const reactions = useMemo(() => {

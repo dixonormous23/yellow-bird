@@ -12,8 +12,10 @@ interface CreateJoinChannelProps {
     toggleOpen: () => void;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+};
 
+// The main two action modals (Create and Join) share the same UI, so just broke
+// this out into it's own component.
 export const CreateJoinChannelModal: React.FC<CreateJoinChannelProps> = ({
     open,
     modalTitle,
@@ -49,5 +51,5 @@ export const CreateJoinChannelModal: React.FC<CreateJoinChannelProps> = ({
                 </CreateJoinChannelForm>
             </CreateJoinInnerContainer>
         </Modal>
-    )
-}
+    );
+};

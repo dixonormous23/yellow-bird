@@ -16,6 +16,7 @@ export const TypingIndicator: React.FC = () => {
         getTypingUsers();
     }, [activeChannel]);
 
+    // @TODO - Should spend some time to support multiple users typing, e.g userOne and userTwo are typing.
     const typingUsers = useMemo(() => {
         if (!user) return;
         const users = activeChannelMembers.filter((member) => usersTyping.includes(member.id) && member.id !== user.uid);

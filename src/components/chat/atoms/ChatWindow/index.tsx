@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { Message } from "@pubnub/chat";
+import { CHANNEL_BOT_DATA } from "@/constants";
 import { usePubNubContext } from "@/context/PubNubContext";
 import { ChatMessage } from "../MessageItem";
 import { ChatAnchor } from "./ChatAnchor";
 import { ChatRoomContainer } from "./styles";
-import { CHANNEL_BOT_DATA } from "@/constants";
 
 export const ChatWindow: React.FC = () => {
     const { activeChannel } = usePubNubContext();

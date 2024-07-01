@@ -25,6 +25,8 @@ export const MessageItemActionsContainer = styled.aside`
     right: 0;
     top: 0;
     padding: 0.2rem;
+    border-radius: 10px;
+    border: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 export const MessageAvatarWrapper = styled.div<{ $stack: boolean }>`
@@ -57,7 +59,8 @@ export const ReactionButton = styled.button`
     height: 30px;
     margin-right: 0.2rem;
     cursor: pointer;
-    border: 1px solid ${({ theme }) => theme.colors.primary};
+    border: none;
+    background-color: transparent;
 `;
 
 export const ReactionWrapper = styled.div`
@@ -65,8 +68,9 @@ export const ReactionWrapper = styled.div`
     bottom: -20px;
     padding: 0.3rem 0.5rem;
     border-radius: 10px;
-    background: ${({ theme }) => theme.colors.primary};
     display: flex;
     align-items: center;
     gap: 1rem;
+    background-color: white;
+    border: 1px solid ${({ theme }) => theme.colors.primaryLight};
 `;

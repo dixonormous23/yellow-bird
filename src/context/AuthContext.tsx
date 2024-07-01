@@ -20,6 +20,7 @@ export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
     const [initialized, setInitialized] = useState<boolean>(false);
 
     useEffect(() => {
+        // This fires when Firebase detects an update in user credentials, e.g logs in or no auth user present
         onAuthStateChanged(auth, async (user) => {
             if (!user) return setInitialized(true);
         
@@ -27,6 +28,8 @@ export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
             const token = await user.getIdToken();
 
             setUser({ ...user, ...userData });
+
+            // Set token for server side auth
             setCookie(USER_COOKIE_KEY, token);
 
             setInitialized(true);

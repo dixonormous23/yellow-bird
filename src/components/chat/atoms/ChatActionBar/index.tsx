@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Channel, User } from "@pubnub/chat";
-import { InviteUserModal, JoinChannelModal } from "./molecules";
-import { ActiveUsersWrapper, ChannelOptionsWrapper, ChatActionsWrapper, CopyChannelCodeButton } from "./styles";
 import { Icon } from "@/components/common";
+import { JoinChannelModal } from "./molecules";
+import { ActiveUsersWrapper, ChannelOptionsWrapper, ChatActionsWrapper, CopyChannelCodeButton } from "./styles";
 
 interface ChatActionsProps {
     activeChannel: Channel | null;
@@ -9,16 +10,25 @@ interface ChatActionsProps {
 }
 
 export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel, activeChannelMembers }) => {
+    const [copied, setCopied] = useState<boolean>(false);
+
     const handleCopyChannelCode = () => {
-        if (!activeChannel?.id) return;
-    
-        navigator.clipboard.writeText(activeChannel.id);
-    }
+        if (!activeChannel?.id || copied) return;
+
+        if (typeof navigator !== 'undefined') {
+            navigator.clipboard.writeText(activeChannel.id);
+
+            setCopied(true);
+
+            setTimeout(() => setCopied(false), 2000);
+        }
+    };
+
     return (
         <ChatActionsWrapper>
             <ActiveUsersWrapper>
                 {activeChannel && (
-                    <>                    
+                    <>
                         <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
                         <small>{activeChannelMembers?.length} members</small>
                     </>
@@ -26,9 +36,10 @@ export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel, activ
             </ActiveUsersWrapper>
             <ChannelOptionsWrapper>
                 {activeChannel && (
-                    <div title="Copy channel code">
+                    <div title="Copy channel id">
                         <CopyChannelCodeButton onClick={handleCopyChannelCode}>
-                            <Icon variant="copy" />
+                            <label>{copied ? "Copied!" : "Copy Channel ID"}</label>
+                            <Icon variant="copy" size={15} />
                         </CopyChannelCodeButton>
                     </div>
                 )}

@@ -13,7 +13,6 @@ const fadeInAnimation = keyframes`
     }
 `;
 
-
 export const FormPageContainer = styled.section`
     display: flex;
     flex-direction: column;

@@ -34,7 +34,17 @@ export const ChannelOptionsWrapper = styled.div`
 `;
 
 export const CopyChannelCodeButton = styled.button`
+    display: flex;
+    align-items: center;
     background-color: transparent;
     border: none;
     cursor: pointer;
+    padding: 0.2rem 1rem;
+    border-radius: 20px;
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+
+    label {
+        cursor: pointer;
+        margin-right: 0.5rem;
+    }
 `;

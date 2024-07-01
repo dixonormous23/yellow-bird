@@ -2,7 +2,7 @@ import { USER_COOKIE_KEY } from "@/constants";
 import { RouteAuth } from "../../@types";
 
 // Checks for user token after a user has logged in and handles routing / redirects accordingly
-// Still needs proper token verification
+// Still needs proper token verification but for this example it works as desired
 export const getServerSideAuth = async (ctx: any, routeAuth: RouteAuth) => {
     const baseHeaders = ctx.req.headers.cookie;
 
@@ -33,6 +33,8 @@ export const getServerSideAuth = async (ctx: any, routeAuth: RouteAuth) => {
 
                 return { props: {} };
             }
+            return { props: {} };
+        default: 
             return { props: {} };
 
     };

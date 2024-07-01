@@ -12,6 +12,7 @@ const ChatPage: NextPage = () => {
     const { initialized, user } = useAuthContext();
 
     if (!initialized) {
+        // Presuming we've passed the getServerSideAuth check we still should wait for user data to be set
         return <Loader />;
     };
 

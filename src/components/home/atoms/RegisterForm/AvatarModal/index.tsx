@@ -28,6 +28,7 @@ const DefaultAvatars: React.FC<DefaultAvatarsProps> = ({ onClick }) => {
     const [images, setImages] = useState<string[]>([]);
 
     useEffect(() => {
+        // Fetches and returns local files for default avatars
         const fetchAvatars = async () => {
             const imageFiles = await fetch('/api/get-default-avatars');
             const images = await imageFiles.json();

@@ -8,7 +8,6 @@ import {
     CurrentChatWindow
 } from "./styles";
 
-
 export const ChatPageComponent = () => {
     const { activeChannel, activeChannelMembers } = usePubNubContext();
     return (
@@ -24,7 +23,6 @@ export const ChatPageComponent = () => {
                         {activeChannel && <ChatInput />}
                     </CurrentChatWindow>
                 </ChatRoomStack>
-                
             </ChatComponentInnerContainer>
         </ChatComponentContainer>
     );

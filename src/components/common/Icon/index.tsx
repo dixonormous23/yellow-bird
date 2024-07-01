@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
 
+// Dynamically load in the SVGs currently being requested
 const BackIcon = dynamic(() => import('./icons/BackIcon'));
 const CopyIcon = dynamic(() => import('./icons/CopyIcon'));
 const PlusIcon = dynamic(() => import('./icons/PlusIcon'));

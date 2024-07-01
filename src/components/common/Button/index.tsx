@@ -9,6 +9,7 @@ interface ButtonProps {
     type?: ButtonType;
     theme?: ButtonTheme;
     disabled?: boolean;
+    // Style overrides for any edge case styles, saves on having to define one-off props
     sx?: CSSProperties;
     onClick?: () => void;
 }

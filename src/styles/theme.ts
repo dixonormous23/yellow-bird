@@ -3,6 +3,7 @@ export type MainTheme = typeof theme;
 export const MOBILE_BREAKPOINT = 480;
 export const TABLET_BREAKPOINT = 850;
 
+// @TODO - Dark mode
 export const theme = {
     colors: {
         primary: "#2F4858",

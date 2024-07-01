@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
+import moment from "moment"; 
 
 import { useAuthContext } from "@/context/AuthContext";
 import { usePubNubContext } from "@/context/PubNubContext";
 import { Icon } from "@/components/common";
+import { CHANNEL_BOT_DATA } from "@/constants";
 import { CreateJoinChannelModal } from "../../../CreateJoinChatModal";
 import { ChannelItemWrapper } from "../../styles";
-import { CHANNEL_BOT_DATA } from "@/constants";
-import moment from "moment";
 
 export const CreateChannelModal: React.FC = () => {
     const { user } = useAuthContext();
@@ -30,6 +30,7 @@ export const CreateChannelModal: React.FC = () => {
         if (!roomName || !chat || !user?.uid || submitting) return;
 
         setSubmitting(true);
+
         const host = await chat.getUser(user.uid);
 
         if (!host) {
