@@ -2,14 +2,15 @@ import { useState } from "react";
 import { Channel, User } from "@pubnub/chat";
 import { Icon } from "@/components/common";
 import { JoinChannelModal } from "./molecules";
-import { ActiveUsersWrapper, ChannelOptionsWrapper, ChatActionsWrapper, CopyChannelCodeButton } from "./styles";
+import { ActiveUsersActionsWrapper, ActiveUsersInnerWrapper, ActiveUsersWrapper, ChannelOptionsWrapper, ChatActionsWrapper, CloseChatButton, CopyChannelCodeButton } from "./styles";
 
 interface ChatActionsProps {
     activeChannel: Channel | null;
     activeChannelMembers: User[];
+    handleCloseChat: () => void;
 }
 
-export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel, activeChannelMembers }) => {
+export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel, activeChannelMembers, handleCloseChat }) => {
     const [copied, setCopied] = useState<boolean>(false);
 
     const handleCopyChannelCode = () => {
@@ -28,10 +29,15 @@ export const ChatActionBar: React.FC<ChatActionsProps> = ({ activeChannel, activ
         <ChatActionsWrapper>
             <ActiveUsersWrapper>
                 {activeChannel && (
-                    <>
-                        <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
-                        <small>{activeChannelMembers?.length} members</small>
-                    </>
+                    <ActiveUsersActionsWrapper>
+                        <CloseChatButton onClick={handleCloseChat}>
+                            <Icon variant="back" size={15} />
+                        </CloseChatButton>
+                        <ActiveUsersInnerWrapper>
+                            <strong>{activeChannel?.name ?? activeChannel?.id}</strong>
+                            <small>{activeChannelMembers?.length} members</small>
+                        </ActiveUsersInnerWrapper>
+                    </ActiveUsersActionsWrapper>
                 )}
             </ActiveUsersWrapper>
             <ChannelOptionsWrapper>

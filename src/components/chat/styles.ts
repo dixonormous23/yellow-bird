@@ -1,3 +1,4 @@
+import { breakpoint } from "@/styles/utils";
 import styled from "styled-components";
 
 export const ChatComponentContainer = styled.div`
@@ -16,6 +17,10 @@ export const ChatComponentInnerContainer = styled.div`
     margin-inline: 2rem;
     margin-bottom: 5rem;
     max-width: ${({ theme }) => theme.widths.maxContent};
+
+    ${breakpoint('mobile')} {
+        margin-inline: 1rem;
+    }
 `;
 
 export const ChatRoomStack = styled.div`

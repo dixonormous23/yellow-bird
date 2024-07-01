@@ -4,7 +4,6 @@ import { AppLayout } from "@/layout";
 import { useAuthContext } from "@/context/AuthContext";
 import { PubNubContextProvider } from "@/context/PubNubContext";
 import { Loader } from "@/components/common/Loader";
-import { Navbar } from "@/layout/Navbar";
 import { getServerSideAuth } from "@/utils/getServerSideAuth";
 import { RouteAuth } from "../../@types";
 
@@ -18,7 +17,6 @@ const ChatPage: NextPage = () => {
 
     return (
         <PubNubContextProvider user={user}>
-            <Navbar />
             <AppLayout>
                 <ChatPageComponent />
             </AppLayout>

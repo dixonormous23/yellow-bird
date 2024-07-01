@@ -51,7 +51,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             const activeUser = (await chat.updateUser(user.uid, {
                 name: user?.username ?? "",
                 custom: {
-                    avatar: user.avatar ?? DEFAULT_AVATAR
+                    avatar: 'https://yellow-bird.vercel.app/avatars/avatar_03.png' ?? DEFAULT_AVATAR
                 }
             }));
 
