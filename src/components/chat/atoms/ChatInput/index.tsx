@@ -82,6 +82,7 @@ export const ChatInput: React.FC = () => {
                     <Icon variant="emoji" size={20} />
                     <EmojiPickerWrapper $open={emojisOpen} ref={emojiRef}>
                         <EmojiPicker
+                            open
                             lazyLoadEmojis
                             onEmojiClick={({ emoji }) => handleAppendEmoji(emoji)}
                         />

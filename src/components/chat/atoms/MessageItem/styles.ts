@@ -25,7 +25,6 @@ export const MessageItemActionsContainer = styled.aside`
     right: 0;
     top: 0;
     padding: 0.2rem;
-    background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const MessageAvatarWrapper = styled.div<{ $stack: boolean }>`
@@ -51,4 +50,23 @@ export const MessageDataWrapper = styled.div`
         align-items: flex-start;
         gap: 0.2rem;
     }
+`;
+
+export const ReactionButton = styled.button`
+    border-radius: 50%;
+    height: 30px;
+    margin-right: 0.2rem;
+    cursor: pointer;
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+`;
+
+export const ReactionWrapper = styled.div`
+    position: absolute;
+    bottom: -20px;
+    padding: 0.3rem 0.5rem;
+    border-radius: 10px;
+    background: ${({ theme }) => theme.colors.primary};
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 `;

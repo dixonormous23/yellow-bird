@@ -22,11 +22,15 @@ export const FormPageContainer = styled.section`
     position: relative;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-top: 96px;
-    padding-bottom: 96px;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
     min-height: 80vh;
     background-position: center center;
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)) center center / cover no-repeat, url(https://zone-ui.vercel.app/assets/background/overlay_1.jpg);
+
+    ${breakpoint('mobile')} {
+        padding-top: 2rem;
+    }
 `;
 
 export const FormContainer = styled.div`

@@ -5,7 +5,7 @@ import { auth, signInWithEmailAndPassword } from '@/firebase';
 import { formattedFirebaseError } from '@/utils/formattedFirebaseError';
 import { DividerText } from '@/components/common/DividerText';
 import { InputField, StyledForm, FormSubmitContainer, SubmissionError, Button } from '@/components/common';
-import { HeroTitle, HeroSubTitle, LoginFormWrapper, RegisterAccountWrapper } from "./styles";
+import { HeroTitle, LoginFormWrapper, RegisterAccountWrapper } from "./styles";
 
 interface FormState {
     email: string;
@@ -52,7 +52,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => 
         <>
             <LoginFormWrapper>
                 <HeroTitle>Welcome to Canary Chat!</HeroTitle>
-                <HeroSubTitle>Chat with virtually anyone in the world for free!</HeroSubTitle>
                 <StyledForm $gutter onSubmit={onSubmit}>
                     <InputField
                         required

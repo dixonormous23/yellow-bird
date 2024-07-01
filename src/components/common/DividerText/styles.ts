@@ -6,7 +6,7 @@ export const StyledDividerText = styled.div<{ $gutters?: boolean; }>`
     text-align: center;
     display: flex;
     align-items: center;
-    margin-block: ${(props) => props.$gutters ? 2 : 0}rem;
+    margin-block: ${(props) => props.$gutters ? 1 : 0}rem;
     
     &::before {
         content: "";
