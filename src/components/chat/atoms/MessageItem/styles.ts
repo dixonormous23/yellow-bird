@@ -26,6 +26,8 @@ export const MessageItemActionsContainer = styled.aside`
     top: 0;
     padding: 0.2rem;
     border-radius: 10px;
+    z-index: 1;
+    background-color: white;
     border: 1px solid ${({ theme }) => theme.colors.border};
 `;
 

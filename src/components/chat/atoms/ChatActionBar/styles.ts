@@ -72,7 +72,7 @@ export const CopyChannelCodeButton = styled.button`
         margin-right: 0.5rem;
     }
 
-    ${breakpoint('mobile')} {
+    ${breakpoint('tablet')} {
         label {
             display: none;
         }
