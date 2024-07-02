@@ -43,6 +43,7 @@ export const ChannelItemsContainer = styled.nav`
     padding-top: 2rem;
     height: -webkit-fill-available;
     background: ${({ theme }) => theme.colors.surfaceLight};
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 
     small {
         text-align: center;
@@ -72,4 +73,10 @@ export const ChannelItemWrapper = styled.div`
             opacity: 1;
         }
     };
+`;
+
+export const SignOutWrapper = styled.div`
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
 `;

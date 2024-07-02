@@ -39,5 +39,5 @@ export const ChatWindow: React.FC = () => {
             })}
             <ChatAnchor messages={messages} />
         </ChatRoomContainer>
-    )
-}
+    );
+};

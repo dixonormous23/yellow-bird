@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { Channel } from "@pubnub/chat";
 
-import { Avatar } from "@/components/common";
+import { Avatar, Button } from "@/components/common";
 import { usePubNubContext } from "@/context/PubNubContext";
 import { useWindowWidth } from "@/hooks/useWindowWidth";
+import { useAuthContext } from "@/context/AuthContext";
 import { CreateChannelModal } from "./molecules";
-import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, UserActionsContainer, Username } from "./styles";
+import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, SignOutWrapper, UserActionsContainer, Username } from "./styles";
 
 interface ChannelListProps {
     condensed: boolean;
@@ -14,6 +15,7 @@ interface ChannelListProps {
 
 export const ChannelList: React.FC<ChannelListProps> = ({ condensed, setCondensed }) => {
     const { isMobile } = useWindowWidth();
+    const { signOut } = useAuthContext();
     const { fetching, channels, activeUser, setNewChannel } = usePubNubContext();
 
     const [userChannels, setUserChannels] = useState<Channel[]>([]);
@@ -54,6 +56,9 @@ export const ChannelList: React.FC<ChannelListProps> = ({ condensed, setCondense
                 ) : null}
                 {!fetching && <CreateChannelModal />}
             </ChannelItemsContainer>
+            <SignOutWrapper>
+                <Button label="Sign out" sx={{ padding: '0.2rem 2rem', fontSize: '0.85rem' }} onClick={signOut} />
+            </SignOutWrapper>
         </ChannelListContainer>
     );
 };

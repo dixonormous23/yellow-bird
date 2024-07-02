@@ -42,13 +42,18 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             const chat = await Chat.init({
                 publishKey: process.env.NEXT_PUBLIC_PUBNUB_PUBLISH_KEY,
                 subscribeKey: process.env.NEXT_PUBLIC_PUBNUB_SUB_KEY,
-                userId: user?.uid,
+                userId: user.uid,
                 typingTimeout: 1000
             });
 
             setChat(chat);
 
-            const activeUser = (await chat.updateUser(user.uid, {
+            const activeUser = (await chat?.updateUser(user.uid, {
+                name: user?.username ?? "",
+                custom: {
+                    avatar: user.avatar ?? DEFAULT_AVATAR
+                }
+            }) ?? await chat?.createUser(user.uid, {
                 name: user?.username ?? "",
                 custom: {
                     avatar: user.avatar ?? DEFAULT_AVATAR
