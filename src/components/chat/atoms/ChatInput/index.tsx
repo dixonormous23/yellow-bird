@@ -22,6 +22,7 @@ export const ChatInput: React.FC = () => {
 
     const inputRef = useRef<HTMLSpanElement | null>(null);
     const emojiRef = useRef<HTMLDivElement | null>(null);
+    const emojiButtonRef = useRef<HTMLDivElement | null>(null);
 
     const handleSubmitMessage = useCallback(async () => {
         const message = inputRef?.current;
@@ -56,18 +57,25 @@ export const ChatInput: React.FC = () => {
         activeChannel?.startTyping();
     }, [activeChannel]);
 
+    const handleToggleEmojis = useCallback((e: MouseEvent) => {
+        if (emojisOpen && !emojiRef.current?.contains(e.target as Node) && !emojiButtonRef?.current?.contains(e.target as Node)) {
+            setEmojisOpen(!emojisOpen);
+        };
+    }, [emojisOpen]);
+
     useEffect(() => {
         if (typeof window !== 'undefined') {
             window.addEventListener('keydown', listenForSubmit);
             window.addEventListener('keyup', listenForTypingEvent);
+            window.addEventListener('click', handleToggleEmojis)
 
             return () => {
                 window.removeEventListener('keydown', listenForSubmit);
                 window.removeEventListener('keyup', listenForTypingEvent);
-
+                window.removeEventListener('click', handleToggleEmojis);
             }
         }
-    }, [listenForSubmit, listenForTypingEvent]);
+    }, [handleToggleEmojis, listenForSubmit, listenForTypingEvent]);
 
     const handleAppendEmoji = (emoji: string) => {
         const inputText = inputRef.current;
@@ -86,16 +94,16 @@ export const ChatInput: React.FC = () => {
         <ChatInputContainer>
             <TypingIndicator />
             <InputInnerContainer $channelName={activeChannel?.name ?? "channel"}>
-                <InputActionButton onClick={() => setEmojisOpen(!emojisOpen)}>
+                <InputActionButton role="button" ref={emojiButtonRef} onClick={() => setEmojisOpen(!emojisOpen)}>
                     <Icon variant="emoji" size={20} />
-                    <EmojiPickerWrapper $open={emojisOpen} ref={emojiRef}>
-                        <EmojiPicker
-                            open
-                            lazyLoadEmojis
-                            onEmojiClick={({ emoji }) => handleAppendEmoji(emoji)}
-                        />
-                    </EmojiPickerWrapper>
                 </InputActionButton>
+                <EmojiPickerWrapper $open={emojisOpen} ref={emojiRef} >
+                    <EmojiPicker
+                        open
+                        lazyLoadEmojis
+                        onEmojiClick={({ emoji }) => handleAppendEmoji(emoji)}
+                    />
+                </EmojiPickerWrapper>
                 <StyledChatInput
                     contentEditable
                     role="textbox"

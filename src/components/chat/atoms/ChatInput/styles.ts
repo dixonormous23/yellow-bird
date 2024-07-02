@@ -55,7 +55,7 @@ export const StyledChatInput = styled.span<{ $currentValue?: string; }>`
     border: none;
     outline: none;
     resize: none;
-    cursor: pointer;
+    cursor: text;
     background: rgba(0, 0, 0, 0.05);
     margin-inline: 1rem;
     border-radius: 10px;

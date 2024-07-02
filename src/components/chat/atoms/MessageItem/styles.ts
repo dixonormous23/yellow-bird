@@ -16,6 +16,10 @@ export const MessageItemWrapper = styled.div`
         aside {
             opacity: 1;
         }
+
+        small {
+            opacity: 1;
+        }
     }
 `;
 
@@ -32,16 +36,23 @@ export const MessageItemActionsContainer = styled.aside`
 `;
 
 export const MessageAvatarWrapper = styled.div<{ $stack: boolean }>`
-    margin-right: ${(props) => props.$stack ? 4 : 1}rem;
+    margin-right: 1rem;
 
-    ${breakpoint('mobile')} {
-        margin-right: 1rem;
+    small {
+        transition: 0.2s;
+        color: gray;
+        opacity: 0;
     }
 `;
 
 export const MessageBodyWrapper = styled.div`
     display: flex;
     flex-direction: column;
+
+    label {
+        font-size: 0.7rem;
+        color: gray;
+    }
 `;
 
 export const MessageDataWrapper = styled.div`
@@ -66,13 +77,28 @@ export const ReactionButton = styled.button`
 `;
 
 export const ReactionWrapper = styled.div`
-    position: absolute;
-    bottom: -20px;
-    padding: 0.3rem 0.5rem;
-    border-radius: 10px;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    background-color: white;
+    gap: 0.7rem;
+    margin-top: 0.5rem;
+`;
+
+export const ReactionItem = styled.span`
+    border-radius: 25px;
+    padding: 0.3rem 0.5rem;
+    background-color: ${({ theme }) => theme.colors.primaryLight};
     border: 1px solid ${({ theme }) => theme.colors.primaryLight};
+
+    small {
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+`;
+
+export const EditingCalloutLabel = styled.strong`
+    font-size: 0.8rem;
+    position: absolute;
+    right: 1rem;
+    bottom: 0;
+    color: gray;
 `;

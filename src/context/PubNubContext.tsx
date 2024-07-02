@@ -61,7 +61,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             }));
 
             const channels = (await chat.getChannels()).channels ?? [];
-
+            console.log(channels);
             // // If we have a new user invite them to the #welcome channel
             const userChannels = (await activeUser.getMemberships()).memberships ?? [];
 
