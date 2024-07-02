@@ -12,6 +12,7 @@ interface ButtonProps {
     // Style overrides for any edge case styles, saves on having to define one-off props
     sx?: CSSProperties;
     onClick?: () => void;
+    'data-cy'?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -20,7 +21,8 @@ export const Button: React.FC<ButtonProps> = ({
     disabled = false,
     theme = 'primary',
     sx = {},
-    onClick = () => {}
+    onClick = () => {},
+    ...rest
 }) => {
     return (
         <StyledButton
@@ -29,6 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
             $theme={theme}
             style={{ ...sx }}
             onClick={onClick}
+            {...rest}
         >
             {label}
         </StyledButton>

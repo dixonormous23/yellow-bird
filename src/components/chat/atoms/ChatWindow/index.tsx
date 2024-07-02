@@ -7,7 +7,7 @@ import { ChatAnchor } from "./ChatAnchor";
 import { ChatRoomContainer } from "./styles";
 
 export const ChatWindow: React.FC = () => {
-    const { activeChannel } = usePubNubContext();
+    const { activeUser, activeChannel } = usePubNubContext();
     const [messages, setMessages] = useState<Message[]>([]);
 
     const fetchChannelHistory = useCallback(async () => {
@@ -29,15 +29,39 @@ export const ChatWindow: React.FC = () => {
         });
     }, [activeChannel]);
 
+    useEffect(() => {
+        if (!messages?.length) return;
+
+        return Message.streamUpdatesOn(messages, setMessages);
+    }, [messages]);
+
+    const toggleReaction = async (message: Message, code: string) => {
+        await message.toggleReaction(code)
+    };
+
+    const handleEditMessage = async (message: Message, text: string) => {
+        await message.editText(text);
+    };
+
     return (
-        <ChatRoomContainer>
+        <ChatRoomContainer data-cy="channel-messages">
             {messages?.map((message: Message, i: number, arr: Message[]) => {
                 // Get previous message and compare userIds to stack message block
                 const previousMessage = arr[i - 1] ?? {};
                 const stack = previousMessage.meta?.userId !== CHANNEL_BOT_DATA.userId && previousMessage.userId === message.userId;
-                return <ChatMessage key={`${message.timetoken}-${i}`} message={message} stack={stack} />;
+
+                return (
+                    <ChatMessage
+                        key={`${message.timetoken}-${i}`}
+                        message={message}
+                        stack={stack}
+                        activeUser={activeUser}
+                        toggleReaction={toggleReaction}
+                        handleEditMessage={handleEditMessage}
+                    />
+                );
             })}
             <ChatAnchor messages={messages} />
         </ChatRoomContainer>
-    )
-}
+    );
+};

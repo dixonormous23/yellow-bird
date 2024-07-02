@@ -75,7 +75,7 @@ export const CreateChannelModal: React.FC = () => {
 
     return (
         <>
-            <ChannelItemWrapper role="button" onClick={toggleOpen}>
+            <ChannelItemWrapper data-cy="create-channel-button" role="button" onClick={toggleOpen}>
                 <Icon variant="plus" size={12} />
                 <label>Create chat</label>
             </ChannelItemWrapper>

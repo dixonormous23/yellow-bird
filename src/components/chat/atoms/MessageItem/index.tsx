@@ -1,17 +1,32 @@
-import { Message } from "@pubnub/chat";
+import { useMemo, useRef, useState } from "react";
+import { Message, User } from "@pubnub/chat";
 import moment from "moment";
 import { Avatar } from "@/components/common";
-import { DEFAULT_AVATAR } from "@/constants";
-import { MessageAvatarWrapper, MessageBodyWrapper, MessageDataWrapper, MessageItemActionsContainer, MessageItemWrapper, ReactionButton, ReactionWrapper } from "./styles";
-import EmojiPicker from "emoji-picker-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { CHANNEL_BOT_DATA, DEFAULT_AVATAR } from "@/constants";
+import {
+    MessageAvatarWrapper,
+    MessageBodyWrapper,
+    MessageDataWrapper,
+    MessageItemActionsContainer,
+    MessageItemWrapper,
+    ReactionButton,
+    ReactionWrapper
+} from "./styles";
 
 interface ChatMessageProps {
     message: Message;
     stack: boolean;
+    activeUser?: User;
+    toggleReaction: (message: Message, code: string) => void;
+    handleEditMessage: (message: Message, newText: string) => void;
 };
 
-const reactionEmojis = [
+interface IReaction {
+    emoji: string;
+    code: string;
+}
+
+const reactionEmojis: IReaction[] = [
     {
         emoji: "👍",
         code: "\u{1f44d}"
@@ -34,24 +49,40 @@ const reactionEmojis = [
     }
 ];
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ message, stack }) => {
-    const [messageData, setMessageData] = useState<Message>(message);
-
-    useEffect(() => {
-        message.streamUpdates((updates) => setMessageData(updates));
-    }, [message]);
+export const ChatMessage: React.FC<ChatMessageProps> = ({
+    activeUser,
+    message,
+    stack,
+    toggleReaction,
+    handleEditMessage
+}) => {
+    const [editing, setEditing] = useState<boolean>(false);
+    const textRef = useRef<HTMLDivElement | null>(null);
 
     const reactions = useMemo(() => {
-        return Object.entries(messageData?.reactions).filter(([_, value]) => value.length);
-    }, [messageData])
+        return Object.entries(message?.reactions).filter(([_, value]) => value.length);
+    }, [message])
 
-    const onClick = useCallback((code: string) => {
-        try {
-            messageData.toggleReaction(code).catch();
-        } catch (error) {
-            console.log(error);
-        }
-    }, [messageData])
+    const onClick = (reaction: IReaction) => {
+        toggleReaction(message, reaction.code)
+    };
+
+    const handleStartEditing = () => {
+        setEditing(!editing);
+        setTimeout(() => textRef.current?.focus(), );
+    };
+
+    const onEditTextSubmitted = () => {
+        // opting for innerHTML vs innerText to support line breaks
+        if (!textRef.current?.innerHTML) return;
+    
+        if (message.text === textRef.current.innerHTML) return setEditing(false);
+        handleEditMessage(message, textRef.current?.innerHTML);
+        setEditing(false);
+    };
+
+    // dynamically set element to div while in edit mode to support focus
+    const TextElement = editing ? 'div' : 'span';
 
     return (
         <MessageItemWrapper>
@@ -60,19 +91,38 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, stack }) => {
             </MessageAvatarWrapper>
             <MessageItemActionsContainer>
                 {reactionEmojis.map((reaction) => (
-                    <ReactionButton key={reaction.code} onClick={() => onClick(reaction.code)}>
+                    <ReactionButton key={reaction.code} onClick={() => onClick(reaction)}>
                         {reaction.emoji}
                     </ReactionButton>
                 ))}
+                {message.userId === activeUser?.id && message?.meta?.userId !== CHANNEL_BOT_DATA.userId && (
+                    <>
+                        {'|'}
+                        <ReactionButton onClick={handleStartEditing}>{editing ? 'Close' : 'Edit'}</ReactionButton>
+                    </>
+                )}
             </MessageItemActionsContainer>
             <MessageBodyWrapper>
                 {!stack && (
                     <MessageDataWrapper>
                         <strong>{message?.meta?.username ?? "User"}</strong>
-                        <small>{moment(message.meta?.timestamp).format('hh:mm:ss a')}</small>
+                        <small>{moment(message.meta?.timestamp).format('h:mm a')}</small>
                     </MessageDataWrapper>
                 )}
-                <span dangerouslySetInnerHTML={{ __html: message.text }} />
+                <TextElement
+                    ref={textRef}
+                    contentEditable={editing}
+                    dangerouslySetInnerHTML={{ __html: message.text }}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+
+                            if (!e.shiftKey) {
+                                onEditTextSubmitted();
+                            }
+                        };
+                    }}
+                />
                 {reactions?.length ? (
                     <ReactionWrapper>
                         {reactions.map(([emoji]) => <span key={emoji}>{emoji}</span>)}

@@ -51,7 +51,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => 
     return (
         <>
             <LoginFormWrapper>
-                <HeroTitle>Welcome to Canary Chat!</HeroTitle>
+                <HeroTitle data-cy="login-title">Welcome to Canary Chat!</HeroTitle>
                 <StyledForm $gutter onSubmit={onSubmit}>
                     <InputField
                         required
@@ -59,6 +59,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => 
                         name="email"
                         label="Email"
                         placeholder="johnny@doe.com"
+                        data-cy='login-email-input'
                         onChange={onChange}
                     />
                     <InputField
@@ -67,17 +68,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => 
                         name="password"
                         label="Password"
                         placeholder="Enter password"
+                        data-cy='login-password-input'
                         onChange={onChange}
                     />
                     <FormSubmitContainer>
-                        <Button label="Sign in" type="submit" disabled={submitDisabled} sx={{ minWidth: '220px' }} />
+                        <Button data-cy="login-button" label="Sign in" type="submit" disabled={submitDisabled} sx={{ minWidth: '220px' }} />
                     </FormSubmitContainer>
-                    {error && <SubmissionError>{error}</SubmissionError>}
+                    {error && <SubmissionError data-cy="submission-error">{error}</SubmissionError>}
                 </StyledForm>
             </LoginFormWrapper>
             <DividerText text="or" gutters />
             <RegisterAccountWrapper>
-                <Button label="Create account" theme='secondary' onClick={handleCreateAccount} />
+                <Button data-cy="register-button" label="Create account" theme='secondary' onClick={handleCreateAccount} />
             </RegisterAccountWrapper>
         </>
     )

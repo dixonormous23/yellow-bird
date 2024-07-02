@@ -42,14 +42,19 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             const chat = await Chat.init({
                 publishKey: process.env.NEXT_PUBLIC_PUBNUB_PUBLISH_KEY,
                 subscribeKey: process.env.NEXT_PUBLIC_PUBNUB_SUB_KEY,
-                userId: user?.uid,
+                userId: user.uid,
                 typingTimeout: 1000
             });
 
             setChat(chat);
 
-            const activeUser = (await chat.updateUser(user.uid, {
-                name: user?.username ?? "",
+            const activeUser = (await chat?.updateUser(user.uid, {
+                name: user?.username ?? "user",
+                custom: {
+                    avatar: user?.avatar ?? DEFAULT_AVATAR
+                }
+            }) ?? await chat?.createUser(user.uid, {
+                name: user?.username ?? "user",
                 custom: {
                     avatar: user.avatar ?? DEFAULT_AVATAR
                 }
@@ -57,7 +62,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
 
             const channels = (await chat.getChannels()).channels ?? [];
 
-            // If we have a new user invite them to the #welcome channel
+            // // If we have a new user invite them to the #welcome channel
             const userChannels = (await activeUser.getMemberships()).memberships ?? [];
 
             if (!userChannels?.length) {

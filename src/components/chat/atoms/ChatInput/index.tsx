@@ -1,12 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import moment from "moment";
+import EmojiPicker from "emoji-picker-react";
 
 import { usePubNubContext } from "@/context/PubNubContext";
 import { useAuthContext } from "@/context/AuthContext";
 import { Icon } from "@/components/common";
-import { ChatInputContainer, InputActionButton, EmojiPickerWrapper, InputElementsWrapper, InputInnerContainer, StyledChatInput, SubmitButton, InputActionsContainer, UploadFileInput } from "./styles";
 import { TypingIndicator } from "./TypingIndicator";
-import EmojiPicker from "emoji-picker-react";
+import { ChatInputContainer, InputActionButton, EmojiPickerWrapper, InputInnerContainer, StyledChatInput, SubmitButton } from "./styles";
+
+/**
+ * Background on <StyledChatInput /> (contentEditable span used for chat input)
+ * 
+ * Opted to go with this approach for a few reasons, mostly due to contentEditable allows for multiline input,
+ * as well as a <span /> will dynamically size to its innerText / innerHTML unlike <div />.
+ */
 
 export const ChatInput: React.FC = () => {
     const { user } = useAuthContext();
@@ -67,6 +74,7 @@ export const ChatInput: React.FC = () => {
 
         if (!inputText) return;
 
+        // Check current innerText to determine if we're appending to or initializing message text
         if (inputText.innerText.length) {
             inputText.innerText = inputText.innerText + emoji;
         } else {
@@ -92,12 +100,14 @@ export const ChatInput: React.FC = () => {
                     contentEditable
                     role="textbox"
                     ref={inputRef}
+                    data-cy="channel-input"
                     $currentValue={inputRef.current?.innerText}
                     onKeyDown={(e) => {
+                        // Allows for resetting innerText and spacing when submitting the message
                         if (e.code === 'Enter' && !e.shiftKey) e.preventDefault();
                     }}
                 />
-                <SubmitButton onClick={handleSubmitMessage}>
+                <SubmitButton onClick={handleSubmitMessage} data-cy="channel-input-submit">
                     <Icon variant="sendMessage" size={20} />
                 </SubmitButton>
             </InputInnerContainer>

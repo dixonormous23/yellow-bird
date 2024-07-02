@@ -35,13 +35,15 @@ export const CreateJoinChannelModal: React.FC<CreateJoinChannelProps> = ({
                     <InputField
                         label={inputLabel}
                         placeholder={inputPlaceholder}
+                        data-cy="new-channel-input"
                         onChange={onChange}
                     />
-                    {error && <SubmissionError>{error}</SubmissionError>}
+                    {error && <SubmissionError data-cy="create-channel-error">{error}</SubmissionError>}
                     <Button
                         label={buttonText}
                         type="submit"
                         disabled={disabled}
+                        data-cy="create-channel-modal-button"
                         sx={{
                             maxWidth: 'fit-content',
                             alignSelf: 'center',
