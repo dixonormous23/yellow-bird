@@ -11,7 +11,6 @@ export default async function handler(
 ) {
     const { userId } = req.body ?? {};
 
-    console.log(req);
     if (!userId) return res.status(400).send({ data: 'Missing required fields' });
 
     await firebaseAdmin.auth().deleteUser(userId)
