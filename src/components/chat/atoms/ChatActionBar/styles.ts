@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { sharedButtonStyles } from "../ChannelList/sharedStyles";
 import { breakpoint } from "@/styles/utils";
 
 export const ChatActionsWrapper = styled.div`
@@ -12,6 +11,7 @@ export const ChatActionsWrapper = styled.div`
     z-index: 1;
     background: white;
     height: 48px;
+    pointer-events: all;
     border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 

@@ -7,5 +7,5 @@ interface AvatarProps {
 }
 
 export const Avatar: React.FC<AvatarProps> = ({ src, alt = "", size = 50 }) => {
-    return <StyledAvatar src={src} alt={alt} $size={size} />;
+    return <StyledAvatar src={src} alt={alt} $size={size} data-cy="avatar" />;
 }

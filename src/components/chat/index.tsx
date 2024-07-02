@@ -12,7 +12,7 @@ import {
 export const ChatPageComponent = () => {
     const { activeChannel, activeChannelMembers } = usePubNubContext();
     const [condenseList, setCondenseList] = useState<boolean>(false);
-    
+
     return (
         <ChatComponentContainer>
             <ChatComponentInnerContainer>

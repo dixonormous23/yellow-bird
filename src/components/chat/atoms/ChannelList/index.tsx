@@ -7,6 +7,7 @@ import { useWindowWidth } from "@/hooks/useWindowWidth";
 import { useAuthContext } from "@/context/AuthContext";
 import { CreateChannelModal } from "./molecules";
 import { ChannelItemWrapper, ChannelItemsContainer, ChannelListContainer, SignOutWrapper, UserActionsContainer, Username } from "./styles";
+import { DEFAULT_AVATAR } from "@/constants";
 
 interface ChannelListProps {
     condensed: boolean;
@@ -41,7 +42,7 @@ export const ChannelList: React.FC<ChannelListProps> = ({ condensed, setCondense
     return (
         <ChannelListContainer $condense={condensed}>
             <UserActionsContainer>
-                <Avatar src={activeUser?.custom?.avatar} size={48} />
+                <Avatar src={activeUser?.custom?.avatar ?? DEFAULT_AVATAR} size={48} />
                 <Username>{activeUser?.name}</Username>
             </UserActionsContainer>
             <ChannelItemsContainer>
@@ -57,7 +58,12 @@ export const ChannelList: React.FC<ChannelListProps> = ({ condensed, setCondense
                 {!fetching && <CreateChannelModal />}
             </ChannelItemsContainer>
             <SignOutWrapper>
-                <Button data-cy="sign-out-button" label="Sign out" sx={{ padding: '0.2rem 2rem', fontSize: '0.85rem' }} onClick={signOut} />
+                <Button
+                    data-cy="sign-out-button"
+                    label="Sign out"
+                    sx={{ padding: '0.2rem 2rem', fontSize: '0.85rem' }}
+                    onClick={signOut}
+                />
             </SignOutWrapper>
         </ChannelListContainer>
     );

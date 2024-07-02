@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { ProviderProps } from "../../@types";
 import { AppLayoutContainer } from "./styles";
+import { NetworkConnectionStatus } from "./NetworkConnectionStatus";
 
 export interface AppMetadataProps extends ProviderProps {
     title?: string;
@@ -22,7 +23,8 @@ export const AppLayout: React.FC<AppMetadataProps> = ({
                 <meta name="description" content={description} />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
-            </Head>   
+            </Head>
+            <NetworkConnectionStatus />
             <AppLayoutContainer>
                 {children}
             </AppLayoutContainer>

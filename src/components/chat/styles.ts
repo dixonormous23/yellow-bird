@@ -30,6 +30,7 @@ export const ChatRoomStack = styled.div`
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid ${({ theme }) => theme.colors.border};
+    box-shadow: 5px 8px 33px rgba(0,0,0,0.1);
 `;
 
 export const CurrentChatWindow = styled.div`

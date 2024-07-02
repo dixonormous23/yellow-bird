@@ -32,7 +32,7 @@ const DefaultAvatars: React.FC<DefaultAvatarsProps> = ({ onClick }) => {
         const fetchAvatars = async () => {
             const imageFiles = await fetch('/api/get-default-avatars');
             const images = await imageFiles.json();
-            const avatars = images?.avatars?.map((file: string) => `${window.location.origin}/avatars/${file}`)
+            const avatars = images?.avatars?.map((file: string) => `https://yellow-bird.vercel.app/avatars/${file}`)
             setImages(avatars);
         };
 

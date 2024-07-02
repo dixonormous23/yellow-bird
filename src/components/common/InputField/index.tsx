@@ -27,7 +27,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 }) => {
     return (
         <InputFieldContainer>
-            {label ? <FormLabel>{label}</FormLabel> : null}
+            {label ? <FormLabel data-cy="input-label">{label}</FormLabel> : null}
             <StyledInputField
                 name={name}
                 type={type}

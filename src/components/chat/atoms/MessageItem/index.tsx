@@ -4,12 +4,14 @@ import moment from "moment";
 import { Avatar } from "@/components/common";
 import { CHANNEL_BOT_DATA, DEFAULT_AVATAR } from "@/constants";
 import {
+    EditingCalloutLabel,
     MessageAvatarWrapper,
     MessageBodyWrapper,
     MessageDataWrapper,
     MessageItemActionsContainer,
     MessageItemWrapper,
     ReactionButton,
+    ReactionItem,
     ReactionWrapper
 } from "./styles";
 
@@ -63,13 +65,21 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         return Object.entries(message?.reactions).filter(([_, value]) => value.length);
     }, [message])
 
+    const formattedMessage = useMemo(() => {
+        if (message?.actions?.edited) {
+            return`${message.text} <label>(edited)</label>`;
+        }
+        return message?.text;
+    }, [message?.actions?.edited, message.text]);
+
     const onClick = (reaction: IReaction) => {
         toggleReaction(message, reaction.code)
     };
 
     const handleStartEditing = () => {
         setEditing(!editing);
-        setTimeout(() => textRef.current?.focus(), );
+        // Not a great workaround, but waiting for the next frame to allow focus
+        setTimeout(() => textRef.current?.focus(), 0);
     };
 
     const onEditTextSubmitted = () => {
@@ -81,13 +91,13 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         setEditing(false);
     };
 
-    // dynamically set element to div while in edit mode to support focus
-    const TextElement = editing ? 'div' : 'span';
-
     return (
         <MessageItemWrapper>
             <MessageAvatarWrapper $stack={stack}>
-                {!stack && <Avatar src={message.meta?.avatar ?? DEFAULT_AVATAR} />}
+                {!stack ? 
+                    <Avatar src={message.meta?.avatar ?? DEFAULT_AVATAR} /> :
+                    <small>{moment(message.meta?.timestamp).format('h:mm a')}</small>
+                }
             </MessageAvatarWrapper>
             <MessageItemActionsContainer>
                 {reactionEmojis.map((reaction) => (
@@ -109,10 +119,10 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                         <small>{moment(message.meta?.timestamp).format('h:mm a')}</small>
                     </MessageDataWrapper>
                 )}
-                <TextElement
+                <div
                     ref={textRef}
                     contentEditable={editing}
-                    dangerouslySetInnerHTML={{ __html: message.text }}
+                    dangerouslySetInnerHTML={{ __html: formattedMessage }}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter' && !e.shiftKey) {
                             e.preventDefault();
@@ -125,9 +135,14 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                 />
                 {reactions?.length ? (
                     <ReactionWrapper>
-                        {reactions.map(([emoji]) => <span key={emoji}>{emoji}</span>)}
+                        {reactions.map(([emoji, value]) => (
+                            <ReactionItem key={emoji}>{emoji} <small>{value.length}</small></ReactionItem>
+                        ))}
                     </ReactionWrapper>
                 ) : null}
+                {editing && (
+                    <EditingCalloutLabel>Press &apos;Enter&apos; to save</EditingCalloutLabel>
+                )}
             </MessageBodyWrapper>
         </MessageItemWrapper>
     );
