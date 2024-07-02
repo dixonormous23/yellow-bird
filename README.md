@@ -1,8 +1,11 @@
 
 # Canary Chat 🐤
 
-A quick little chat app developed for Yellow Bird as a preliminary coding exercise. 
+A quick little chat app developed for Yellow Bird as a preliminary coding exercise. This project involves building a real-time, two-way chat application using ReactJS, NextJS and integrating PubNub's free Chat SDK API. The application allows users to create or join a chat using a code and provides a standard chat experience with features such as reactions, editing past messages, emoji support, and more.
+ 
 
+## Live Demo
+[https://yellow-bird.vercel.app/chat](https://yellow-bird.vercel.app/chat)
 
 ## Getting Started
 
