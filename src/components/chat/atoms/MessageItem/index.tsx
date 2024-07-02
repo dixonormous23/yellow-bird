@@ -71,7 +71,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         }
         return message?.text;
     }, [message?.actions?.edited, message.text]);
-    // console.log(for)
+
     const onClick = (reaction: IReaction) => {
         toggleReaction(message, reaction.code)
     };
@@ -93,7 +93,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
 
     // dynamically set element to div while in edit mode to support focus
     const TextElement = editing ? 'div' : 'span';
-    console.log(reactions);
+
     return (
         <MessageItemWrapper>
             <MessageAvatarWrapper $stack={stack}>

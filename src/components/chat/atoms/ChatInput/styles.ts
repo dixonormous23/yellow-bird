@@ -29,7 +29,7 @@ export const InputInnerContainer = styled.div<{ $channelName: string }>`
     span[contenteditable]:empty:focus::before,
     span[contenteditable]:empty::before {
         color: gray;
-        content: "${(props) => `Message ${props.$channelName}`}";
+        content: "${(props) => `Message #${props.$channelName}`}";
     }
 `;
 

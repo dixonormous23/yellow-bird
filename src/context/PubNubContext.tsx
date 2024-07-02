@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Channel, Chat, User } from '@pubnub/chat';
 import { ProviderProps, UserInterface } from "../../@types";
 import { DEFAULT_AVATAR, WELCOME_CHANNEL_ID } from "@/constants";
@@ -43,7 +43,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
                 publishKey: process.env.NEXT_PUBLIC_PUBNUB_PUBLISH_KEY,
                 subscribeKey: process.env.NEXT_PUBLIC_PUBNUB_SUB_KEY,
                 userId: user.uid,
-                typingTimeout: 1000
+                typingTimeout: 500
             });
 
             setChat(chat);
@@ -61,7 +61,6 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             }));
 
             const channels = (await chat.getChannels()).channels ?? [];
-            console.log(channels);
             // // If we have a new user invite them to the #welcome channel
             const userChannels = (await activeUser.getMemberships()).memberships ?? [];
 
