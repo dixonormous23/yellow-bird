@@ -12,7 +12,8 @@ export const theme = {
         border: "rgba(0,0,0,0.2)",
         surface: "white",
         surfaceLight: "rgba(0, 0, 0, 0.02)",
-        error: "indianred"
+        error: "indianred",
+        success: "lawngreen"
     },
     fontFamily: {
         primary: "Poppins",
