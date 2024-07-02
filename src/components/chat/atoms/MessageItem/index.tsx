@@ -78,7 +78,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
 
     const handleStartEditing = () => {
         setEditing(!editing);
-        // Not a great workaround, but waiting for the next frame to allow div to mount to allow focus
+        // Not a great workaround, but waiting for the next frame to allow focus
         setTimeout(() => textRef.current?.focus(), 0);
     };
 
@@ -90,9 +90,6 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         handleEditMessage(message, textRef.current?.innerHTML);
         setEditing(false);
     };
-
-    // dynamically set element to div while in edit mode to support focus
-    const TextElement = editing ? 'div' : 'span';
 
     return (
         <MessageItemWrapper>
@@ -122,7 +119,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                         <small>{moment(message.meta?.timestamp).format('h:mm a')}</small>
                     </MessageDataWrapper>
                 )}
-                <TextElement
+                <div
                     ref={textRef}
                     contentEditable={editing}
                     dangerouslySetInnerHTML={{ __html: formattedMessage }}

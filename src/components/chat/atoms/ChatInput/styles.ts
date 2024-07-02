@@ -26,8 +26,8 @@ export const InputInnerContainer = styled.div<{ $channelName: string }>`
     align-items: center;
     width: 100%;
 
-    span[contenteditable]:empty:focus::before,
-    span[contenteditable]:empty::before {
+    div[contenteditable]:empty:focus::before,
+    div[contenteditable]:empty::before {
         color: gray;
         content: "${(props) => `Message #${props.$channelName}`}";
     }
@@ -47,7 +47,7 @@ export const InputActionsContainer = styled.div`
     gap: 0.8rem;
 `;
 
-export const StyledChatInput = styled.span<{ $currentValue?: string; }>`
+export const StyledChatInput = styled.div<{ $currentValue?: string; }>`
     padding-inline: 1rem;
     font-size: 1rem;
     position: relative;

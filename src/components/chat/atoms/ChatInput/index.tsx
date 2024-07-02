@@ -9,10 +9,10 @@ import { TypingIndicator } from "./TypingIndicator";
 import { ChatInputContainer, InputActionButton, EmojiPickerWrapper, InputInnerContainer, StyledChatInput, SubmitButton } from "./styles";
 
 /**
- * Background on <StyledChatInput /> (contentEditable span used for chat input)
+ * Background on <StyledChatInput /> (contentEditable div used for chat input)
  * 
  * Opted to go with this approach for a few reasons, mostly due to contentEditable allows for multiline input,
- * as well as a <span /> will dynamically size to its innerText / innerHTML unlike <div />.
+ * as well as a <div /> will dynamically size to its innerText / innerHTML
  */
 
 export const ChatInput: React.FC = () => {
@@ -20,7 +20,7 @@ export const ChatInput: React.FC = () => {
     const { activeChannel } = usePubNubContext();
     const [emojisOpen, setEmojisOpen] = useState<boolean>(false);
 
-    const inputRef = useRef<HTMLSpanElement | null>(null);
+    const inputRef = useRef<HTMLDivElement | null>(null);
     const emojiRef = useRef<HTMLDivElement | null>(null);
     const emojiButtonRef = useRef<HTMLDivElement | null>(null);
 
