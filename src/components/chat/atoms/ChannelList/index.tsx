@@ -49,7 +49,7 @@ export const ChannelList: React.FC<ChannelListProps> = ({ condensed, setCondense
                     <small>Loading chats..</small>
                 ) : userChannels?.length ? (
                     userChannels.map((channel) => (
-                        <ChannelItemWrapper key={channel.id} onClick={() => onChannelItemClick(channel)}>
+                        <ChannelItemWrapper data-cy={`channel-${channel.name ?? channel.id}`} key={channel.id} onClick={() => onChannelItemClick(channel)}>
                             <span># {channel.name ?? channel.id}</span>
                         </ChannelItemWrapper>
                     ))
@@ -57,7 +57,7 @@ export const ChannelList: React.FC<ChannelListProps> = ({ condensed, setCondense
                 {!fetching && <CreateChannelModal />}
             </ChannelItemsContainer>
             <SignOutWrapper>
-                <Button label="Sign out" sx={{ padding: '0.2rem 2rem', fontSize: '0.85rem' }} onClick={signOut} />
+                <Button data-cy="sign-out-button" label="Sign out" sx={{ padding: '0.2rem 2rem', fontSize: '0.85rem' }} onClick={signOut} />
             </SignOutWrapper>
         </ChannelListContainer>
     );

@@ -44,7 +44,7 @@ export const ChatWindow: React.FC = () => {
     };
 
     return (
-        <ChatRoomContainer>
+        <ChatRoomContainer data-cy="channel-messages">
             {messages?.map((message: Message, i: number, arr: Message[]) => {
                 // Get previous message and compare userIds to stack message block
                 const previousMessage = arr[i - 1] ?? {};

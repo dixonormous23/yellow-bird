@@ -84,7 +84,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleBackToLogin })
 
     return (
         <>
-            <FormTitle>Create Account</FormTitle>
+            <FormTitle data-cy="create-account">Create Account</FormTitle>
             <FormSubtitle>Already have an account? <span onClick={handleBackToLogin}>Back to Login</span></FormSubtitle>
             <AvatarContainer>
                 <UserAvatar src={state?.avatar ?? DEFAULT_AVATAR} alt="user_avatar" />
@@ -96,6 +96,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleBackToLogin })
                     name="username"
                     label="Username"
                     placeholder="johnnyDoe23"
+                    data-cy='register-username'
                     onChange={onChange}
                 />
                 <InputField
@@ -104,6 +105,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleBackToLogin })
                     name="email"
                     label="Email"
                     placeholder="johnny@doe.com"
+                    data-cy='register-email'
                     onChange={onChange}
                 />
                 <InputField
@@ -112,6 +114,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleBackToLogin })
                     name="password"
                     label="Password"
                     placeholder="Minimum 6 characters"
+                    data-cy='register-password'
                     onChange={onChange}
                 />
                 <InputField
@@ -120,10 +123,11 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleBackToLogin })
                     name="confirmPassword"
                     label="Confirm Password"
                     placeholder="Re-enter password"
+                    data-cy='register-password-confirm'
                     onChange={onChange}
                 />
                 <FormSubmitContainer>
-                    <Button label="Submit" type="submit" disabled={submitDisabled} />
+                    <Button data-cy='submit-register-button' label="Submit" type="submit" disabled={submitDisabled} />
                 </FormSubmitContainer>
                 {error && <SubmissionError>{error}</SubmissionError>}
             </StyledForm>

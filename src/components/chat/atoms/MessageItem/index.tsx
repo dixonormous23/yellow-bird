@@ -73,10 +73,11 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
     };
 
     const onEditTextSubmitted = () => {
-        if (!textRef.current?.innerText) return;
+        // opting for innerHTML vs innerText to support line breaks
+        if (!textRef.current?.innerHTML) return;
     
-        if (message.text === textRef.current.innerText) return setEditing(false);
-        handleEditMessage(message, textRef.current?.innerText);
+        if (message.text === textRef.current.innerHTML) return setEditing(false);
+        handleEditMessage(message, textRef.current?.innerHTML);
         setEditing(false);
     };
 
@@ -113,7 +114,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                     contentEditable={editing}
                     dangerouslySetInnerHTML={{ __html: message.text }}
                     onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
+                        if (e.key === 'Enter' && !e.shiftKey) {
                             e.preventDefault();
 
                             if (!e.shiftKey) {

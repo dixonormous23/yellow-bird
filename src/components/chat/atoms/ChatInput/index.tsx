@@ -100,13 +100,14 @@ export const ChatInput: React.FC = () => {
                     contentEditable
                     role="textbox"
                     ref={inputRef}
+                    data-cy="channel-input"
                     $currentValue={inputRef.current?.innerText}
                     onKeyDown={(e) => {
-                        // Allows for resetting innerText when submitting the message
+                        // Allows for resetting innerText and spacing when submitting the message
                         if (e.code === 'Enter' && !e.shiftKey) e.preventDefault();
                     }}
                 />
-                <SubmitButton onClick={handleSubmitMessage}>
+                <SubmitButton onClick={handleSubmitMessage} data-cy="channel-input-submit">
                     <Icon variant="sendMessage" size={20} />
                 </SubmitButton>
             </InputInnerContainer>

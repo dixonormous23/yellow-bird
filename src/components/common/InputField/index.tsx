@@ -10,6 +10,7 @@ interface InputFieldProps {
     label?: string;
     required?: boolean;
     type?: InputType;
+    'data-cy'?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,7 +22,8 @@ export const InputField: React.FC<InputFieldProps> = ({
     label,
     placeholder,
     required = false,
-    onChange
+    onChange,
+    ...rest
 }) => {
     return (
         <InputFieldContainer>
@@ -34,6 +36,7 @@ export const InputField: React.FC<InputFieldProps> = ({
                 autoComplete={autoComplete}
                 placeholder={placeholder}
                 onChange={onChange}
+                {...rest}
             />
         </InputFieldContainer>
     );

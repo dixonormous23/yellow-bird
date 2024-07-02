@@ -4,7 +4,7 @@ import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 
 import { auth, db, onAuthStateChanged } from "@/firebase";
 import { ProviderProps, UserInterface } from "../../@types";
-import { USER_COOKIE_KEY } from "@/constants";
+import { CYPRESS_COOKIE, USER_COOKIE_KEY } from "@/constants";
 
 export interface AuthContextInterface {
     user: UserInterface | null;
@@ -31,13 +31,14 @@ export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
             // Set token for server side auth
             setCookie(USER_COOKIE_KEY, token);
-
+            setCookie(CYPRESS_COOKIE, user.uid);
             setInitialized(true);
         })
     }, []);
 
     const signOut = () => {
         deleteCookie(USER_COOKIE_KEY);
+        deleteCookie(CYPRESS_COOKIE);
         auth.signOut();
         router.replace('/');
     };
