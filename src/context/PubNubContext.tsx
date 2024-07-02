@@ -83,7 +83,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
     // Setting active channel from <ChannelList /> to attach the user to the desired channel
     const setNewChannel = useCallback(async (channel: Channel): Promise<void> => {
         if (!chat || !channel) return;
-        console.log(channel.id);
+
         const memberData = (await channel.getMembers()).members ?? [];
 
         const members = await Promise.all(memberData.map(async (member) => {
