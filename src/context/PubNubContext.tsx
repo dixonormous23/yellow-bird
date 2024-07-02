@@ -48,6 +48,9 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
 
             setChat(chat);
 
+            // If the user already exists in PubNub we can send updates, initializing any new
+            // values that the user might have updated. For this current implementation the user
+            // is not able to update their profile, but if implemented this would handle such updates
             const activeUser = (await chat?.updateUser(user.uid, {
                 name: user?.username ?? "user",
                 custom: {
@@ -80,7 +83,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
     // Setting active channel from <ChannelList /> to attach the user to the desired channel
     const setNewChannel = useCallback(async (channel: Channel): Promise<void> => {
         if (!chat || !channel) return;
-
+        console.log(channel.id);
         const memberData = (await channel.getMembers()).members ?? [];
 
         const members = await Promise.all(memberData.map(async (member) => {

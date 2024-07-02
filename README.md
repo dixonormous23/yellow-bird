@@ -1,16 +1,22 @@
 
 # Canary Chat 🐤
 
-A quick little chat app developed for Yellow Bird as a preliminary coding exercise. 
+A quick little chat app developed for Yellow Bird as a preliminary coding exercise. This project involves building a real-time, two-way chat application using ReactJS, NextJS and integrating PubNub's free Chat SDK API. The application allows users to create or join a chat using a code and provides a standard chat experience with features such as reactions, editing past messages, emoji support, and more.
+ 
 
+## Live Demo
+[https://yellow-bird.vercel.app/chat](https://yellow-bird.vercel.app/chat)
 
 ## Getting Started
 
-Install dependencies:
+- Install dependencies:
 
 ```bash
 npm install
 ```
+- Set up a PubNub account and obtain the necessary keys.
+- Configure the PubNub and Firebase keys in the project's `.env` file (see `.env.sample` for all needed env keys).
+
 
 Next, run the development server:
 
@@ -24,9 +30,9 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the application in your browser: [http://localhost:3000](http://localhost:3000)
 
-
+- To run E2E and Unit tests, run `yarn test` to open cypress. Ensure development server is running on [http://localhost:3000](http://localhost:3000) if running E2E tests.
 
 ## Stack
 
@@ -49,8 +55,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - NextJS ✅
 
 ## Key Components
-- Chat input
-  - To support single and multiline support for user input I opted to use a contentEditable `<div>`. This is mostly because an `<input />` doesn't natively support multiline input, and would avoid any extra calculations on a `<textarea />` with rows, height, etc.
+- `PubNubContext`: Context component that stands up the Chat SDK and provides channel, chat and member data to the app.
+
+- `ChatPageComponent`: This component is the full view of the `/chat` page, mounting necessary components depending on the `activeChannel` state (user selected channel).
+
+- `ChatWindow`: Component that houses all user messages within the select channel. This component also manages all updates to the message, i.e `reactions` and `editText` with the provided `Message.streamUpdatesOn(messages, setMessages);` method from the Chat SDK.
+
+- `ChatMessage`: Component that renders a user's message in a given channel. Key features include `reactions` and `editing text`. Editing text is made possible by switching to `contentEditable`, and is only editable by the author of the original message.
+
+
+- `Chat input`: To support single and multiline support for user input I opted to use a contentEditable `<div>`. This is mostly because an `<input />` doesn't natively support multiline input, and would avoid any extra calculations on a `<textarea />` with rows, height, etc.
 
 ```tsx
 <StyledChatInput
@@ -65,3 +79,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     }}
 />
   ```
+
+
+## Assumptions During Development
+- PubNub React Components
+  - After reading through PubNub's docs there was mention of a React SDK, which would have aided in a quicker turn around. Upon further reading this library is [no longer supported](https://www.pubnub.com/docs/sdks/react) and relies on an older version of `@pubnub`. So with this I opted to use the `Chat SDK` which provided cleaner, typed methods than the `JavaScript SDK`. This also allowed me to tailor the fronend experience in a completely customized way.
+- User Authentication
+  - Upon reading through and considering the stretch goals I decided to go with Firebase to handle user authentication and state, mostly due to fast stand up time to connect authenticated users.
+- Project Scope
+  - Given the handful of stretch goals, as well as giving a max of 3 days for a feature complete, I opted to implement the previously mentioned stretch goals to keep the overall design in scope. 
