@@ -8,11 +8,13 @@ interface ChatAnchorProps {
 
 export const ChatAnchor: React.FC<ChatAnchorProps> = ({ messages }) => {
     useEffect(() => {
-        const anchor = document.getElementById('chatAnchor');
-
-        if (!anchor) return;
-
-        anchor.scrollIntoView(true);
+        if (typeof window !== 'undefined') {
+                const anchor = document.getElementById('chatAnchor');
+        
+                if (!anchor) return;
+        
+                anchor.scrollIntoView(true);
+        }
     }, [messages]);
 
     return <LastMessageAnchor id="chatAnchor" />;
