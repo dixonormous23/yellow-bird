@@ -82,5 +82,5 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleCreateAccount }) => 
                 <Button data-cy="register-button" label="Create account" theme='secondary' onClick={handleCreateAccount} />
             </RegisterAccountWrapper>
         </>
-    )
-}
+    );
+};

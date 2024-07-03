@@ -6,6 +6,7 @@ interface ChatAnchorProps {
     messages: Message[];
 }
 
+// Once a message is sent, received, or updated, <ChatWindow /> will scroll to this element
 export const ChatAnchor: React.FC<ChatAnchorProps> = ({ messages }) => {
     useEffect(() => {
         if (typeof window !== 'undefined') {

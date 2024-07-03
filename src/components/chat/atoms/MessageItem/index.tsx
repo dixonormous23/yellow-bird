@@ -82,11 +82,14 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         setTimeout(() => textRef.current?.focus(), 0);
     };
 
+    // Note: opting for innerHTML vs innerText in this case to support line breaks
     const onEditTextSubmitted = () => {
-        // opting for innerHTML vs innerText to support line breaks
+        // If there's no input ensure we don't allow a user to submit
         if (!textRef.current?.innerHTML) return;
     
+        // If there's no updates, don't request editText
         if (message.text === textRef.current.innerHTML) return setEditing(false);
+    
         handleEditMessage(message, textRef.current?.innerHTML);
         setEditing(false);
     };

@@ -11,6 +11,7 @@ export const FormSubtitle = styled.p`
     font-size: 0.9rem;
 
     span {
+        cursor: pointer;
         text-decoration: underline;
     }
 `;

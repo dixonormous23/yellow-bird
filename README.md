@@ -79,6 +79,7 @@ Open the application in your browser: [http://localhost:3000](http://localhost:3
     }}
 />
   ```
+  - `getServerSideAuth`: A small helper function used in `getServerSideProps` to check and validate auth cookies to handle authorized or non-authorized redirects.
 
 
 ## Assumptions During Development

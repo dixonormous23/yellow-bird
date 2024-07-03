@@ -46,6 +46,7 @@ export const JoinChannelModal: React.FC = () => {
             }
 
             await channel.invite(host);
+            // Attaching bot metadata to send message to channel that the user has joined
             await channel.sendText(`${host.name} has joined!`, {
                 storeInHistory: true,
                 meta: {
