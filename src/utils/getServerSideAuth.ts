@@ -12,6 +12,7 @@ export const getServerSideAuth = async (ctx: any, routeAuth: RouteAuth) => {
         return prev;
     }, {});
 
+    // token set after onAuthStateChanged is fired once user auth is valid
     const userToken = (cookies ?? {})[USER_COOKIE_KEY] ?? null;
 
     switch (routeAuth) {

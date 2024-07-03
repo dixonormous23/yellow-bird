@@ -31,6 +31,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
     const refetchChannels = useCallback(async () => {
         if (!chat || !activeUser) return;
 
+        // Only fetch and display channels the current user is a member of
         const userChannels = (await activeUser.getMemberships()).memberships.map(({ channel }) => channel);
         setChannels(userChannels);
     }, [activeUser, chat])
@@ -64,9 +65,9 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
             }));
 
             const channels = (await chat.getChannels()).channels ?? [];
-            // // If we have a new user invite them to the #welcome channel
             const userChannels = (await activeUser.getMemberships()).memberships ?? [];
-
+            
+            // // If we have a new user invite them to the #welcome channel
             if (!userChannels?.length) {
                 const welcomeChannel = await chat.getChannel(WELCOME_CHANNEL_ID);
                 await welcomeChannel?.invite(activeUser);
@@ -80,7 +81,7 @@ export const PubNubContextProvider: React.FC<PubNupProviderProps> = ({ children,
         initializeChat();
     }, [user]);
 
-    // Setting active channel from <ChannelList /> to attach the user to the desired channel
+    // Setting active channel from <ChannelList /> to connect the user to the desired channel
     const setNewChannel = useCallback(async (channel: Channel): Promise<void> => {
         if (!chat || !channel) return;
 

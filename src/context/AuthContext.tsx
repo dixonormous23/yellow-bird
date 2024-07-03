@@ -1,10 +1,10 @@
 import { useState, useEffect, createContext, useContext, } from "react";
 import { useRouter } from "next/router";
-import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
+import { deleteCookie, setCookie } from 'cookies-next';
 
 import { auth, db, onAuthStateChanged } from "@/firebase";
-import { ProviderProps, UserInterface } from "../../@types";
 import { CYPRESS_COOKIE, USER_COOKIE_KEY } from "@/constants";
+import { ProviderProps, UserInterface } from "../../@types";
 
 export interface AuthContextInterface {
     user: UserInterface | null;
@@ -31,6 +31,7 @@ export const AuthContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
             // Set token for server side auth
             setCookie(USER_COOKIE_KEY, token);
+            // Set token for Cypress test suite
             setCookie(CYPRESS_COOKIE, user.uid);
             setInitialized(true);
         })

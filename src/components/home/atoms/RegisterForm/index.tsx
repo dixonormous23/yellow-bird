@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import Link from 'next/link';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
 

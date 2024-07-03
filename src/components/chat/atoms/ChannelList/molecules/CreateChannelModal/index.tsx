@@ -38,6 +38,7 @@ export const CreateChannelModal: React.FC = () => {
             return setError("You must be logged in to create a room");
         };
 
+        // Ensure we don't allow a user to create a channel if it already has that name
         const roomNameExists = channels.find((channel) => channel.name === roomName);
 
         if (roomNameExists) {
@@ -53,6 +54,7 @@ export const CreateChannelModal: React.FC = () => {
                 }
             });
 
+            // Send creation message to new channel
             await channel.sendText(`${host.name} created #${roomName}`, {
                 storeInHistory: true,
                 meta: {
